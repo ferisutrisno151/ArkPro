@@ -180,17 +180,17 @@
                     <span>Daftar Alat yang Sedang Dipinjam</span>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[700px]">
+                    <table class="w-full text-left border-collapse text-[10px] border border-slate-300 min-w-[700px]">
                         <thead>
                             <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
-                                <th class="py-3 px-4 border-r border-slate-300">No</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Tgl Pinjam</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Peminjam</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Lokasi Kerja</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Nama Alat</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Serial No / Inv</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Vol Pinjam</th>
-                                <th class="py-3 px-4">Kondisi Status</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">No</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Tgl Pinjam</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Peminjam</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Lokasi Kerja</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Nama Alat</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Serial No / Inv</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Vol Pinjam</th>
+                                <th class="py-1 px-1.5">Kondisi Status</th>
                             </tr>
                         </thead>
                         <tbody id="dashboard-loan-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
@@ -343,16 +343,11 @@
                     <input type="hidden" id="edit-index-alat" value="">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pembelian (Acuan Utama)</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pembelian</label>
                             <input type="date" id="input-tgl-beli" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Inventaris Dasar</label>
-                            <input type="text" id="input-no-inv-base" placeholder="INV-257" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
-                        </div>
-                    </div>
-
-                    <div>
+                      <div>
+                   <div>
                         <div class="flex items-center justify-between mb-2">
                             <label class="text-xs font-semibold text-slate-600">Daftar Item Barang Berdasarkan Tanggal Di Atas</label>
                             <button type="button" onclick="addAlatRow()" class="text-xs font-medium text-brand-primary hover:underline flex items-center space-x-1">
@@ -360,17 +355,18 @@
                             </button>
                         </div>
                         <div class="border border-slate-300 rounded-xl overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs min-w-[700px] border border-slate-300">
+                            <table class="w-full text-left border-collapse text-[10px] min-w-[700px] border border-slate-300">
                                 <thead>
                                     <tr class="bg-slate-100 text-slate-600 uppercase border-b border-slate-300">
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Kategori</th>
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Nama Alat</th>
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Brand / Type</th>
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Qty</th>
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Sat</th>
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Lokasi</th>
-                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Kondisi</th>
-                                        <th class="py-2.5 px-2.5 text-center">Aksi</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">No. Ivntaris</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Kategori</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Nama Alat</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Brand / Type</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Qty</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Sat</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Lokasi</th>
+                                        <th class="py-1 px-1.5 border-r border-slate-300">Kondisi</th>
+                                        <th class="py-1 px-1.5 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="multi-alat-rows" class="divide-y divide-slate-300"></tbody>
