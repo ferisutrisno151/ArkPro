@@ -101,48 +101,48 @@
         <div id="tab-dashboard" class="space-y-6">
             <div>
                 <h2 class="text-lg font-bold text-slate-800">Dashboard Inventaris Alat Proyek</h2>
-                <p class="text-xs text-slate-500">Ringkasan kondisi dan pergerakan alat proyek secara real-time.</p>
+                <p class="text-xs text-slate-500">Ringkasan kondisi dan pergerakan alat proyek secara real-time. Klik pada kartu untuk melihat rincian.</p>
             </div>
 
-            <!-- Metric Cards -->
+            <!-- Metric Cards (Clickable) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div onclick="showDashboardDetail('total')" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-blue-500 hover:shadow-md transition">
                     <div>
                         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Item Inventaris</p>
                         <h3 id="stat-total-item" class="text-2xl font-extrabold text-slate-800 mt-1">0 Unit</h3>
                     </div>
                     <div class="mt-3 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
-                        <span>Akumulasi volume</span>
+                        <span>Klik rincian</span>
                         <i class="fa-solid fa-boxes-stacked text-blue-500"></i>
                     </div>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div onclick="showDashboardDetail('rusak')" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-amber-500 hover:shadow-md transition">
                     <div>
                         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Alat Rusak / Perbaikan</p>
                         <h3 id="stat-rusak-perbaikan" class="text-2xl font-extrabold text-amber-600 mt-1">0 Unit</h3>
                     </div>
                     <div class="mt-3 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
-                        <span>Status perbaikan</span>
+                        <span>Klik rincian</span>
                         <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
                     </div>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div onclick="showDashboardDetail('baik')" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-emerald-500 hover:shadow-md transition">
                     <div>
                         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Alat Kondisi Baik</p>
                         <h3 id="stat-kondisi-baik" class="text-2xl font-extrabold text-emerald-600 mt-1">0 Unit</h3>
                     </div>
                     <div class="mt-3 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
-                        <span>Siap digunakan</span>
+                        <span>Klik rincian</span>
                         <i class="fa-solid fa-circle-check text-emerald-500"></i>
                     </div>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div onclick="showDashboardDetail('gudang')" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between cursor-pointer hover:border-purple-500 hover:shadow-md transition">
                     <div>
                         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Tersedia di Gudang</p>
                         <h3 id="stat-di-gudang" class="text-2xl font-extrabold text-purple-600 mt-1">0 Unit</h3>
                     </div>
                     <div class="mt-3 flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
-                        <span>Stok gudang</span>
+                        <span>Klik rincian</span>
                         <i class="fa-solid fa-warehouse text-purple-500"></i>
                     </div>
                 </div>
@@ -178,7 +178,6 @@
                                 <th class="p-2.5">Tgl Pinjam</th>
                                 <th class="p-2.5">Peminjam</th>
                                 <th class="p-2.5">Nama Equipment / Tool</th>
-                                <th class="p-2.5">Serial No</th>
                                 <th class="p-2.5">Lokasi Kerja</th>
                                 <th class="p-2.5">Vol Pinjam</th>
                                 <th class="p-2.5">Status</th>
@@ -224,7 +223,6 @@
                                 <th class="p-2.5">Kategori</th>
                                 <th class="p-2.5">Nama Equipment</th>
                                 <th class="p-2.5">Brand/Type</th>
-                                <th class="p-2.5">Serial No</th>
                                 <th class="p-2.5">Tgl Beli</th>
                                 <th class="p-2.5">Lokasi</th>
                                 <th class="p-2.5">Kondisi</th>
@@ -265,7 +263,6 @@
                                 <th class="p-2.5">Tgl Pinjam</th>
                                 <th class="p-2.5">Peminjam</th>
                                 <th class="p-2.5">Nama Alat</th>
-                                <th class="p-2.5">Serial No</th>
                                 <th class="p-2.5">Vol Pinjam</th>
                                 <th class="p-2.5">Vol Kembali</th>
                                 <th class="p-2.5">Status</th>
@@ -290,15 +287,12 @@
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
                 <div class="flex items-center justify-between">
                     <h3 class="text-sm font-bold text-slate-700">Stok & Status Equipment/Tool Terkini</h3>
-                    <div class="flex space-x-2">
-                        <button onclick="filterStock('Semua')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-2.5 py-1 rounded font-medium">Filter: Semua</button>
-                    </div>
                 </div>
                 <div class="overflow-x-auto custom-scroll">
                     <table class="w-full text-left text-xs">
                         <thead class="bg-slate-50 text-slate-600 uppercase text-[10px] border-b border-slate-200">
                             <tr>
-                                <th class="p-2.5">Serial No</th>
+                                <th class="p-2.5">No Inv</th>
                                 <th class="p-2.5">Nama Equipment/Tool</th>
                                 <th class="p-2.5">Kategori</th>
                                 <th class="p-2.5">Brand/Type</th>
@@ -317,129 +311,127 @@
 
     </main>
 
-    <!-- ================= POP-UP MODAL: FORM INPUT/EDIT ALAT ================= -->
-    <div id="modal-inventaris" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4 my-8">
+    <!-- ================= POP-UP MODAL: DASHBOARD DETAIL RINCIAN ================= -->
+    <div id="modal-dashboard-detail" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6 space-y-4 my-8">
             <div class="flex items-center justify-between border-b pb-3">
-                <h3 id="modal-inventaris-title" class="text-base font-bold text-slate-800">Form Input / Edit Inventaris Alat</h3>
+                <div>
+                    <h3 id="modal-detail-title" class="text-base font-bold text-slate-800">Rincian Data Alat</h3>
+                    <p id="modal-detail-qty" class="text-xs text-slate-500 mt-0.5">Total Quantity: 0 Unit</p>
+                </div>
+                <button onclick="closeDashboardDetail()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="overflow-x-auto custom-scroll max-h-96">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-50 text-slate-600 uppercase text-[10px] border-b border-slate-200 sticky top-0">
+                        <tr>
+                            <th class="p-2.5">No Inv</th>
+                            <th class="p-2.5">Nama Alat</th>
+                            <th class="p-2.5">Brand/Type</th>
+                            <th class="p-2.5">Kondisi</th>
+                            <th class="p-2.5">Lokasi</th>
+                            <th class="p-2.5">Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-detail-table-body" class="divide-y divide-slate-100">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-end pt-2 border-t">
+                <button type="button" onclick="closeDashboardDetail()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-4 py-2 rounded-lg font-semibold transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= POP-UP MODAL: FORM INPUT/EDIT ALAT (MULTI-ITEM) ================= -->
+    <div id="modal-inventaris" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6 space-y-4 my-8">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 id="modal-inventaris-title" class="text-base font-bold text-slate-800">Form Input Inventaris Alat Baru</h3>
                 <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            <form id="form-inventaris" onsubmit="saveInventory(event)" class="space-y-3">
+            <form id="form-inventaris" onsubmit="saveInventory(event)" class="space-y-4">
                 <input type="hidden" id="edit-index" value="">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Kategori</label>
-                        <input type="text" id="inv-kategori" required placeholder="Contoh: Power Tool" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Nama Equipment / Tool</label>
-                        <input type="text" id="inv-nama" required placeholder="Contoh: Bor Listrik" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Brand / Type</label>
-                        <input type="text" id="inv-brand" required placeholder="Contoh: Makita HP1630" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Serial No</label>
-                        <input type="text" id="inv-serial" required placeholder="Contoh: SN-001" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                
+                <!-- Tanggal & No. Inventaris Bersama -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3 rounded-lg border">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-1">Tanggal Pembelian</label>
-                        <input type="date" id="inv-tgl" required class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <input type="date" id="inv-tgl" required class="w-full text-xs border rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Nomor Inventaris</label>
-                        <input type="text" id="inv-noinv" required placeholder="Contoh: INV-001" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Nomor Inventaris (Dasar)</label>
+                        <input type="text" id="inv-noinv" required placeholder="Contoh: INV-001" class="w-full text-xs border rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Lokasi / Posisi Alat</label>
-                        <input type="text" id="inv-lokasi" required placeholder="Contoh: Gudang Utama" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                <!-- Container Multi Item Alat -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-xs font-bold text-slate-700">Daftar Item Barang dalam 1 Tgl</label>
+                        <button type="button" onclick="addInventoryItemRow()" class="bg-blue-50 text-blue-600 hover:bg-blue-100 text-[11px] font-semibold px-2.5 py-1 rounded transition flex items-center space-x-1">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                            <span>Tambah Baris Item</span>
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Kondisi / Status</label>
-                        <select id="inv-kondisi" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
-                            <option value="Baik">Baik (Normal)</option>
-                            <option value="Perbaikan">Perbaikan</option>
-                            <option value="Rusak">Rusak</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Volume</label>
-                        <input type="number" id="inv-volume" required value="1" min="1" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Satuan</label>
-                        <input type="text" id="inv-satuan" required value="Unit" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">PIC</label>
-                        <input type="text" id="inv-pic" required placeholder="Nama PIC" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                    <div id="inventory-items-container" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                        <!-- Dynamic rows injected here -->
                     </div>
                 </div>
+
                 <div class="flex justify-end space-x-2 pt-3 border-t">
                     <button type="button" onclick="closeAddModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-4 py-2 rounded-lg font-semibold transition">Batal</button>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-lg font-semibold transition">Simpan Data</button>
+                    <button type="submit" id="btn-save-inv" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-lg font-semibold transition cursor-pointer">Simpan Data</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ================= POP-UP MODAL: FORM PEMINJAMAN ALAT ================= -->
+    <!-- ================= POP-UP MODAL: FORM PEMINJAMAN ALAT (MULTI-ITEM) ================= -->
     <div id="modal-peminjaman" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4 my-8">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6 space-y-4 my-8">
             <div class="flex items-center justify-between border-b pb-3">
                 <h3 class="text-base font-bold text-slate-800">Form Peminjaman Alat Proyek</h3>
                 <button onclick="closeBorrowModal()" class="text-slate-400 hover:text-slate-600">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            <form id="form-peminjaman" onsubmit="saveBorrow(event)" class="space-y-3">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <form id="form-peminjaman" onsubmit="saveBorrow(event)" class="space-y-4">
+                <!-- Info Peminjam Bersama -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-1">Tanggal Pinjam</label>
-                        <input type="date" id="borrow-tgl" required class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <input type="date" id="borrow-tgl" required class="w-full text-xs border rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Pilih Alat dari Inventaris</label>
-                        <select id="borrow-select-item" onchange="onSelectItemToBorrow()" required class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
-                            <option value="">-- Pilih Alat --</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-1">Nama Peminjam</label>
-                        <input type="text" id="borrow-peminjam" required placeholder="Nama peminjam" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <input type="text" id="borrow-peminjam" required placeholder="Nama peminjam" class="w-full text-xs border rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold text-slate-600 mb-1">Lokasi Pekerjaan / Tujuan</label>
-                        <input type="text" id="borrow-lokasi" required placeholder="Contoh: Lantai 2" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <input type="text" id="borrow-lokasi" required placeholder="Contoh: Lantai 2" class="w-full text-xs border rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Volume Pinjam</label>
-                        <input type="number" id="borrow-volume" required value="1" min="1" class="w-full text-xs border rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                <!-- Container Multi Item Peminjaman -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-xs font-bold text-slate-700">Pilih Beberapa Item Alat untuk Dipinjam</label>
+                        <button type="button" onclick="addBorrowItemRow()" class="bg-blue-50 text-blue-600 hover:bg-blue-100 text-[11px] font-semibold px-2.5 py-1 rounded transition flex items-center space-x-1">
+                            <i class="fa-solid fa-plus text-[10px]"></i>
+                            <span>Tambah Item Alat</span>
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Serial No</label>
-                        <input type="text" id="borrow-serial" readonly class="w-full text-xs border rounded-lg p-2.5 bg-slate-100 text-slate-600 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Kondisi Saat Pinjam</label>
-                        <input type="text" id="borrow-kondisi" readonly class="w-full text-xs border rounded-lg p-2.5 bg-slate-100 text-slate-600 outline-none">
+                    <div id="borrow-items-container" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                        <!-- Dynamic borrow item rows injected here -->
                     </div>
                 </div>
+
                 <div class="flex justify-end space-x-2 pt-3 border-t">
                     <button type="button" onclick="closeBorrowModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-4 py-2 rounded-lg font-semibold transition">Batal</button>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-lg font-semibold transition">Catat Peminjaman</button>
@@ -452,15 +444,15 @@
     <script>
         // Default Sample Data if LocalStorage is empty
         const defaultInventory = [
-            { noInv: "INV-01", kategori: "Power Tool", nama: "Bor Listrik", brand: "Makita HP1630", serial: "SN-001", tgl: "2025-01-10", lokasi: "Gudang Utama", kondisi: "Baik", volume: 1, satuan: "Unit", pic: "Budi" },
-            { noInv: "INV-02", kategori: "Heavy Tool", nama: "Generator Set", brand: "Honda 5000W", serial: "SN-002", tgl: "2024-11-15", lokasi: "Proyek A", kondisi: "Rusak", volume: 1, satuan: "Unit", pic: "Joko" },
-            { noInv: "INV-03", kategori: "Hand Tool", nama: "Kunci Pas Set", brand: "Tekiro 24pcs", serial: "SN-003", tgl: "2025-02-01", lokasi: "Gudang Utama", kondisi: "Baik", volume: 1, satuan: "Set", pic: "Agus" },
-            { noInv: "INV-04", kategori: "Measuring Tool", nama: "Laser Distance Meter", brand: "Bosch GLM 40", serial: "SN-004", tgl: "2025-03-10", lokasi: "Proyek B", kondisi: "Perbaikan", volume: 1, satuan: "Unit", pic: "Doni" },
-            { noInv: "INV-05", kategori: "Power Tool", nama: "Mesin Gerinda", brand: "Makita M0900B", serial: "SN-005", tgl: "2025-01-20", lokasi: "Gudang Utama", kondisi: "Rusak", volume: 1, satuan: "Unit", pic: "Eko" }
+            { noInv: "INV-01", kategori: "Power Tool", nama: "Bor Listrik", brand: "Makita HP1630", tgl: "2025-01-10", lokasi: "Gudang Utama", kondisi: "Baik", volume: 1, satuan: "Unit" },
+            { noInv: "INV-02", kategori: "Heavy Tool", nama: "Generator Set", brand: "Honda 5000W", tgl: "2024-11-15", lokasi: "Proyek A", kondisi: "Rusak", volume: 1, satuan: "Unit" },
+            { noInv: "INV-03", kategori: "Hand Tool", nama: "Kunci Pas Set", brand: "Tekiro 24pcs", tgl: "2025-02-01", lokasi: "Gudang Utama", kondisi: "Baik", volume: 1, satuan: "Set" },
+            { noInv: "INV-04", kategori: "Measuring Tool", nama: "Laser Distance Meter", brand: "Bosch GLM 40", tgl: "2025-03-10", lokasi: "Proyek B", kondisi: "Perbaikan", volume: 1, satuan: "Unit" },
+            { noInv: "INV-05", kategori: "Power Tool", nama: "Mesin Gerinda", brand: "Makita M0900B", tgl: "2025-01-20", lokasi: "Gudang Utama", kondisi: "Rusak", volume: 1, satuan: "Unit" }
         ];
 
         const defaultBorrows = [
-            { id: 1, tgl: "2026-06-01", peminjam: "Andi", nama: "Bor Listrik", serial: "SN-001", lokasi: "Lantai 2", volPinjam: 1, volKembali: 0, status: "Dipinjam" }
+            { id: 1, tgl: "2026-06-01", peminjam: "Andi", nama: "Bor Listrik", lokasi: "Lantai 2", volPinjam: 1, volKembali: 0, status: "Dipinjam" }
         ];
 
         let inventoryData = JSON.parse(localStorage.getItem('proyek_inventory')) || defaultInventory;
@@ -471,7 +463,6 @@
 
         // Initialize App on load
         window.onload = function() {
-            // Set default date for forms
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('inv-tgl').value = today;
             document.getElementById('borrow-tgl').value = today;
@@ -492,7 +483,6 @@
             renderInventoryTable();
             renderBorrowTable();
             renderStockTable();
-            populateBorrowItemSelect();
         }
 
         // Sidebar toggle
@@ -518,13 +508,11 @@
             if(activeNav) {
                 activeNav.className = "flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition bg-blue-600 text-white shadow";
             }
-            // Close sidebar on mobile after click
             if(!document.getElementById('sidebar').classList.contains('-translate-x-full')) {
                 toggleSidebar();
             }
         }
 
-        // Sync Data simulation
         function syncData() {
             alert("Data berhasil disinkronkan secara real-time!");
             renderAll();
@@ -543,13 +531,62 @@
             document.getElementById('stat-di-gudang').innerText = diGudang + " Unit";
         }
 
+        // Dashboard Card Click Rincian Modal
+        function showDashboardDetail(type) {
+            let filtered = [];
+            let title = "";
+            let totalQty = 0;
+
+            if(type === 'total') {
+                filtered = inventoryData;
+                title = "Rincian Semua Item Inventaris";
+            } else if(type === 'rusak') {
+                filtered = inventoryData.filter(i => i.kondisi === 'Rusak' || i.kondisi === 'Perbaikan');
+                title = "Rincian Alat Rusak / Perbaikan";
+            } else if(type === 'baik') {
+                filtered = inventoryData.filter(i => i.kondisi === 'Baik');
+                title = "Rincian Alat Kondisi Baik";
+            } else if(type === 'gudang') {
+                filtered = inventoryData.filter(i => i.lokasi.toLowerCase().includes('gudang'));
+                title = "Rincian Alat Tersedia di Gudang";
+            }
+
+            totalQty = filtered.reduce((acc, item) => acc + parseInt(item.volume || 0), 0);
+
+            document.getElementById('modal-detail-title').innerText = title;
+            document.getElementById('modal-detail-qty').innerText = `Total Quantity: ${totalQty} Unit`;
+
+            const tbody = document.getElementById('modal-detail-table-body');
+            tbody.innerHTML = '';
+            filtered.forEach(item => {
+                let badgeColor = item.kondisi === 'Baik' ? 'bg-emerald-100 text-emerald-700' : (item.kondisi === 'Perbaikan' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700');
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b border-slate-100">
+                        <td class="p-2.5 font-bold text-blue-600">${item.noInv}</td>
+                        <td class="p-2.5 font-semibold text-slate-800">${item.nama}</td>
+                        <td class="p-2.5 text-slate-600">${item.brand}</td>
+                        <td class="p-2.5"><span class="${badgeColor} px-2 py-0.5 rounded text-[10px] font-bold">${item.kondisi}</span></td>
+                        <td class="p-2.5">${item.lokasi}</td>
+                        <td class="p-2.5 font-bold">${item.volume} ${item.satuan}</td>
+                    </tr>
+                `;
+            });
+            if(filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">Tidak ada data untuk kategori ini.</td></tr>`;
+            }
+
+            document.getElementById('modal-dashboard-detail').classList.remove('hidden');
+        }
+
+        function closeDashboardDetail() {
+            document.getElementById('modal-dashboard-detail').classList.add('hidden');
+        }
+
         // Render Charts
         function renderCharts() {
-            // Bar Chart
             const ctxBar = document.getElementById('barChart').getContext('2d');
             if (barChartInstance) barChartInstance.destroy();
 
-            // Group volume by tool name
             let labels = inventoryData.map(i => i.nama);
             let dataVals = inventoryData.map(i => parseInt(i.volume));
 
@@ -572,7 +609,6 @@
                 }
             });
 
-            // Pie Chart (Kondisi)
             const ctxPie = document.getElementById('pieChart').getContext('2d');
             if (pieChartInstance) pieChartInstance.destroy();
 
@@ -608,7 +644,6 @@
                         <td class="p-2.5">${item.tgl}</td>
                         <td class="p-2.5 font-semibold text-slate-800">${item.peminjam}</td>
                         <td class="p-2.5">${item.nama}</td>
-                        <td class="p-2.5 text-slate-500">${item.serial}</td>
                         <td class="p-2.5">${item.lokasi}</td>
                         <td class="p-2.5">${item.volPinjam} Unit</td>
                         <td class="p-2.5"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">${item.status}</span></td>
@@ -616,7 +651,7 @@
                 `;
             });
             if(borrowData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">Belum ada data peminjaman aktif.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Belum ada data peminjaman aktif.</td></tr>`;
             }
         }
 
@@ -632,7 +667,6 @@
                         <td class="p-2.5">${item.kategori}</td>
                         <td class="p-2.5 font-semibold text-slate-800">${item.nama}</td>
                         <td class="p-2.5 text-slate-600">${item.brand}</td>
-                        <td class="p-2.5 text-slate-500">${item.serial}</td>
                         <td class="p-2.5">${item.tgl}</td>
                         <td class="p-2.5">${item.lokasi}</td>
                         <td class="p-2.5"><span class="${badgeColor} px-2 py-0.5 rounded text-[10px] font-bold">${item.kondisi}</span></td>
@@ -658,7 +692,6 @@
                         <td class="p-2.5">${item.tgl}</td>
                         <td class="p-2.5 font-semibold text-slate-800">${item.peminjam}</td>
                         <td class="p-2.5">${item.nama}</td>
-                        <td class="p-2.5 text-slate-500">${item.serial}</td>
                         <td class="p-2.5">${item.volPinjam} Unit</td>
                         <td class="p-2.5 font-semibold text-emerald-600">${item.volKembali} Unit</td>
                         <td class="p-2.5"><span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">${item.status}</span></td>
@@ -669,7 +702,7 @@
                 `;
             });
             if(borrowData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-400">Belum ada riwayat peminjaman.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">Belum ada riwayat peminjaman.</td></tr>`;
             }
         }
 
@@ -681,7 +714,7 @@
                 let badgeColor = item.kondisi === 'Baik' ? 'bg-emerald-100 text-emerald-700' : (item.kondisi === 'Perbaikan' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700');
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="p-2.5 font-bold text-slate-600">${item.serial}</td>
+                        <td class="p-2.5 font-bold text-blue-600">${item.noInv}</td>
                         <td class="p-2.5 font-semibold text-slate-800">${item.nama}</td>
                         <td class="p-2.5">${item.kategori}</td>
                         <td class="p-2.5 text-slate-600">${item.brand}</td>
@@ -693,33 +726,14 @@
             });
         }
 
-        // Populate Borrow Item Select Dropdown
-        function populateBorrowItemSelect() {
-            const select = document.getElementById('borrow-select-item');
-            select.innerHTML = '<option value="">-- Pilih Alat dari Inventaris --</option>';
-            inventoryData.forEach((item, index) => {
-                select.innerHTML += `<option value="${index}">${item.nama} (${item.serial}) - Stok: ${item.volume}</option>`;
-            });
-        }
-
-        function onSelectItemToBorrow() {
-            const idx = document.getElementById('borrow-select-item').value;
-            if(idx !== "") {
-                const item = inventoryData[idx];
-                document.getElementById('borrow-serial').value = item.serial;
-                document.getElementById('borrow-kondisi').value = item.kondisi;
-            } else {
-                document.getElementById('borrow-serial').value = '';
-                document.getElementById('borrow-kondisi').value = '';
-            }
-        }
-
-        // Modal Controls for Inventaris
+        // ================= MULTI-ITEM INVENTORY MODAL LOGIC =================
         function openAddModal() {
             document.getElementById('modal-inventaris-title').innerText = "Form Input Inventaris Alat Baru";
-            document.getElementById('form-inventaris').reset();
             document.getElementById('edit-index').value = "";
             document.getElementById('inv-tgl').value = new Date().toISOString().split('T')[0];
+            document.getElementById('inv-noinv').value = "INV-" + Math.floor(100 + Math.random() * 900);
+            document.getElementById('inventory-items-container').innerHTML = '';
+            addInventoryItemRow(); // Add default 1 row
             document.getElementById('modal-inventaris').classList.remove('hidden');
         }
 
@@ -727,45 +741,107 @@
             document.getElementById('modal-inventaris').classList.add('hidden');
         }
 
+        function addInventoryItemRow(data = null) {
+            const container = document.getElementById('inventory-items-container');
+            const rowId = Date.now() + Math.random();
+            const div = document.createElement('div');
+            div.className = "flex items-end gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-200 relative group";
+            div.innerHTML = `
+                <div class="flex-1 grid grid-cols-1 sm:grid-cols-4 gap-2">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Kategori</label>
+                        <input type="text" class="inv-row-kategori w-full text-xs border rounded p-2 bg-white" required placeholder="Tool" value="${data ? data.kategori : ''}">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Nama Alat</label>
+                        <input type="text" class="inv-row-nama w-full text-xs border rounded p-2 bg-white" required placeholder="Bor Tangan" value="${data ? data.nama : ''}">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Brand / Type</label>
+                        <input type="text" class="inv-row-brand w-full text-xs border rounded p-2 bg-white" required placeholder="Makita" value="${data ? data.brand : ''}">
+                    </div>
+                    <div class="grid grid-cols-2 gap-1">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Vol</label>
+                            <input type="number" class="inv-row-volume w-full text-xs border rounded p-2 bg-white" required min="1" value="${data ? data.volume : 1}">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Satuan</label>
+                            <input type="text" class="inv-row-satuan w-full text-xs border rounded p-2 bg-white" required value="${data ? data.satuan : 'Unit'}">
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mt-2 sm:mt-0 sm:w-48">
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Lokasi</label>
+                        <input type="text" class="inv-row-lokasi w-full text-xs border rounded p-2 bg-white" required placeholder="Gudang" value="${data ? data.lokasi : 'Gudang Utama'}">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Kondisi</label>
+                        <select class="inv-row-kondisi w-full text-xs border rounded p-2 bg-white">
+                            <option value="Baik" ${data && data.kondisi==='Baik'?'selected':''}>Baik</option>
+                            <option value="Perbaikan" ${data && data.kondisi==='Perbaikan'?'selected':''}>Perbaikan</option>
+                            <option value="Rusak" ${data && data.kondisi==='Rusak'?'selected':''}>Rusak</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" onclick="this.closest('.flex').remove()" class="text-red-500 hover:text-red-700 p-2"><i class="fa-solid fa-trash text-xs"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
         function editInventory(index) {
             const item = inventoryData[index];
             document.getElementById('modal-inventaris-title').innerText = "Edit Inventaris Alat";
             document.getElementById('edit-index').value = index;
-            document.getElementById('inv-kategori').value = item.kategori;
-            document.getElementById('inv-nama').value = item.nama;
-            document.getElementById('inv-brand').value = item.brand;
-            document.getElementById('inv-serial').value = item.serial;
             document.getElementById('inv-tgl').value = item.tgl;
             document.getElementById('inv-noinv').value = item.noInv;
-            document.getElementById('inv-lokasi').value = item.lokasi;
-            document.getElementById('inv-kondisi').value = item.kondisi;
-            document.getElementById('inv-volume').value = item.volume;
-            document.getElementById('inv-satuan').value = item.satuan;
-            document.getElementById('inv-pic').value = item.pic;
+            document.getElementById('inventory-items-container').innerHTML = '';
+            addInventoryItemRow(item);
             document.getElementById('modal-inventaris').classList.remove('hidden');
         }
 
         function saveInventory(event) {
             event.preventDefault();
             const editIdx = document.getElementById('edit-index').value;
-            const newItem = {
-                noInv: document.getElementById('inv-noinv').value,
-                kategori: document.getElementById('inv-kategori').value,
-                nama: document.getElementById('inv-nama').value,
-                brand: document.getElementById('inv-brand').value,
-                serial: document.getElementById('inv-serial').value,
-                tgl: document.getElementById('inv-tgl').value,
-                lokasi: document.getElementById('inv-lokasi').value,
-                kondisi: document.getElementById('inv-kondisi').value,
-                volume: document.getElementById('inv-volume').value,
-                satuan: document.getElementById('inv-satuan').value,
-                pic: document.getElementById('inv-pic').value
-            };
+            const tgl = document.getElementById('inv-tgl').value;
+            const noInvBase = document.getElementById('inv-noinv').value;
 
-            if(editIdx === "") {
-                inventoryData.push(newItem);
+            const rows = document.querySelectorAll('#inventory-items-container > div');
+            if(rows.length === 0) {
+                alert("Harap masukkan minimal 1 item barang!");
+                return;
+            }
+
+            if(editIdx !== "") {
+                // Edit single item
+                const row = rows[0];
+                inventoryData[editIdx] = {
+                    noInv: noInvBase,
+                    tgl: tgl,
+                    kategori: row.querySelector('.inv-row-kategori').value,
+                    nama: row.querySelector('.inv-row-nama').value,
+                    brand: row.querySelector('.inv-row-brand').value,
+                    lokasi: row.querySelector('.inv-row-lokasi').value,
+                    kondisi: row.querySelector('.inv-row-kondisi').value,
+                    volume: row.querySelector('.inv-row-volume').value,
+                    satuan: row.querySelector('.inv-row-satuan').value
+                };
             } else {
-                inventoryData[editIdx] = newItem;
+                // Add new items (Multi item support in 1 date)
+                rows.forEach((row, idx) => {
+                    inventoryData.push({
+                        noInv: `${noInvBase}-${idx + 1}`,
+                        tgl: tgl,
+                        kategori: row.querySelector('.inv-row-kategori').value,
+                        nama: row.querySelector('.inv-row-nama').value,
+                        brand: row.querySelector('.inv-row-brand').value,
+                        lokasi: row.querySelector('.inv-row-lokasi').value,
+                        kondisi: row.querySelector('.inv-row-kondisi').value,
+                        volume: row.querySelector('.inv-row-volume').value,
+                        satuan: row.querySelector('.inv-row-satuan').value
+                    });
+                });
             }
 
             saveData();
@@ -779,10 +855,12 @@
             }
         }
 
-        // Modal Controls for Borrow
+        // ================= MULTI-ITEM BORROW MODAL LOGIC =================
         function openBorrowModal() {
             document.getElementById('form-peminjaman').reset();
             document.getElementById('borrow-tgl').value = new Date().toISOString().split('T')[0];
+            document.getElementById('borrow-items-container').innerHTML = '';
+            addBorrowItemRow(); // Add default 1 row
             document.getElementById('modal-peminjaman').classList.remove('hidden');
         }
 
@@ -790,24 +868,62 @@
             document.getElementById('modal-peminjaman').classList.add('hidden');
         }
 
+        function addBorrowItemRow() {
+            const container = document.getElementById('borrow-items-container');
+            const div = document.createElement('div');
+            div.className = "flex items-center gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-200";
+
+            let optionsHtml = '<option value="">-- Pilih Alat dari Inventaris --</option>';
+            inventoryData.forEach((item, idx) => {
+                optionsHtml += `<option value="${idx}">${item.nama} (${item.brand}) - Stok: ${item.volume}</option>`;
+            });
+
+            div.innerHTML = `
+                <div class="flex-1">
+                    <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Pilih Alat</label>
+                    <select class="borrow-row-select w-full text-xs border rounded p-2 bg-white" required>
+                        ${optionsHtml}
+                    </select>
+                </div>
+                <div class="w-28">
+                    <label class="block text-[10px] font-bold text-slate-600 mb-0.5">Volume Pinjam</label>
+                    <input type="number" class="borrow-row-volume w-full text-xs border rounded p-2 bg-white" required value="1" min="1">
+                </div>
+                <button type="button" onclick="this.closest('.flex').remove()" class="text-red-500 hover:text-red-700 p-2 mt-4"><i class="fa-solid fa-trash text-xs"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
         function saveBorrow(event) {
             event.preventDefault();
-            const idx = document.getElementById('borrow-select-item').value;
-            const item = inventoryData[idx];
+            const tgl = document.getElementById('borrow-tgl').value;
+            const peminjam = document.getElementById('borrow-peminjam').value;
+            const lokasi = document.getElementById('borrow-lokasi').value;
 
-            const newBorrow = {
-                id: Date.now(),
-                tgl: document.getElementById('borrow-tgl').value,
-                peminjam: document.getElementById('borrow-peminjam').value,
-                nama: item.nama,
-                serial: item.serial,
-                lokasi: document.getElementById('borrow-lokasi').value,
-                volPinjam: parseInt(document.getElementById('borrow-volume').value),
-                volKembali: 0,
-                status: "Dipinjam"
-            };
+            const rows = document.querySelectorAll('#borrow-items-container > div');
+            if(rows.length === 0) {
+                alert("Harap pilih minimal 1 item alat untuk dipinjam!");
+                return;
+            }
 
-            borrowData.unshift(newBorrow);
+            rows.forEach(row => {
+                const selectIdx = row.querySelector('.borrow-row-select').value;
+                const volPinjam = parseInt(row.querySelector('.borrow-row-volume').value);
+                if(selectIdx !== "") {
+                    const item = inventoryData[selectIdx];
+                    borrowData.unshift({
+                        id: Date.now() + Math.random(),
+                        tgl: tgl,
+                        peminjam: peminjam,
+                        nama: item.nama,
+                        lokasi: lokasi,
+                        volPinjam: volPinjam,
+                        volKembali: 0,
+                        status: "Dipinjam"
+                    });
+                }
+            });
+
             saveData();
             closeBorrowModal();
             switchTab('dashboard');
@@ -822,9 +938,9 @@
 
         // Export CSV function
         function exportToCSV() {
-            let csvContent = "No Inv,Kategori,Nama Equipment,Brand/Type,Serial No,Tgl Beli,Lokasi,Kondisi,Volume,Satuan,PIC\n";
+            let csvContent = "No Inv,Kategori,Nama Equipment,Brand/Type,Tgl Beli,Lokasi,Kondisi,Volume,Satuan\n";
             inventoryData.forEach(i => {
-                csvContent += `"${i.noInv}","${i.kategori}","${i.nama}","${i.brand}","${i.serial}","${i.tgl}","${i.lokasi}","${i.kondisi}","${i.volume}","${i.satuan}","${i.pic}"\n`;
+                csvContent += `"${i.noInv}","${i.kategori}","${i.nama}","${i.brand}","${i.tgl}","${i.lokasi}","${i.kondisi}","${i.volume}","${i.satuan}"\n`;
             });
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -834,10 +950,6 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-        }
-
-        function filterStock(type) {
-            renderStockTable();
         }
     </script>
 </body>
