@@ -21,13 +21,13 @@
     <div class="flex h-screen overflow-hidden relative">
         
         <!-- BACKDROP OVERLAY UNTUK HP KETIKA SIDEBAR MUNCUL -->
-        <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity"></div>
 
-        <!-- SIDEBAR (Bisa disembunyikan di HP & Desktop Toggle) -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-auto flex flex-col shadow-xl">
+        <!-- SIDEBAR (Bisa disembunyikan/ditampilkan secara responsif) -->
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-auto flex flex-col shadow-xl flex-shrink-0">
             <div class="flex items-center justify-between h-16 px-6 bg-slate-950">
                 <span class="text-xl font-bold tracking-wider text-blue-400"><i class="fa-solid fa-helmet-safety mr-2"></i>PRO-INVENT</span>
-                <button @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button @click="sidebarOpen = false" class="md:hidden text-gray-400 hover:text-white focus:outline-none"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
             <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
@@ -49,9 +49,9 @@
             <div class="p-4 bg-slate-950 border-t border-slate-800 space-y-2 text-xs">
                 <p class="text-gray-400 font-semibold mb-1"><i class="fa-solid fa-database mr-1"></i> Backup & Restore:</p>
                 <div class="flex gap-2">
-                    <button @click="exportJSON()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-2 rounded text-center transition"><i class="fa-solid fa-download mr-1"></i> Export JSON</button>
+                    <button @click="exportJSON()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-2 rounded text-center transition"><i class="fa-solid fa-download mr-1"></i> Export</button>
                     <label class="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-2 px-2 rounded text-center cursor-pointer transition">
-                        <i class="fa-solid fa-upload mr-1"></i> Import JSON
+                        <i class="fa-solid fa-upload mr-1"></i> Import
                         <input type="file" @change="importJSON($event)" accept=".json" class="hidden">
                     </label>
                 </div>
@@ -62,9 +62,12 @@
         <div class="flex-1 flex flex-col h-screen overflow-hidden w-full">
             
             <!-- HEADER -->
-            <header class="flex items-center justify-between h-16 px-6 bg-white border-b border-gray-200 shadow-sm z-10 flex-shrink-0">
+            <header class="flex items-center justify-between h-16 px-6 bg-white border-b border-gray-200 shadow-sm z-30 flex-shrink-0">
                 <div class="flex items-center">
-                    <button @click="sidebarOpen = !sidebarOpen" class="text-gray-600 hover:text-gray-900 md:hidden mr-4 focus:outline-none"><i class="fa-solid fa-bars text-xl"></i></button>
+                    <!-- Tombol Hamburger untuk membuka sidebar di HP -->
+                    <button @click="sidebarOpen = !sidebarOpen" class="text-gray-600 hover:text-gray-900 md:hidden mr-4 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
                     <h1 class="text-base md:text-lg font-bold text-gray-800 uppercase tracking-wide" x-text="currentTab"></h1>
                 </div>
                 
@@ -186,7 +189,6 @@
                 <!-- ================= TAB 3: PEMINJAM ALAT ================= -->
                 <div x-show="currentTab === 'peminjam'" class="space-y-8">
                     
-                    <!-- Sub Section: Peminjaman Aktif -->
                     <div class="space-y-4">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                             <h2 class="text-lg md:text-xl font-bold text-gray-800">Daftar Peminjaman Alat</h2>
@@ -227,8 +229,8 @@
                                                 <td class="p-3 border-r"><span class="px-2 py-1 bg-emerald-50 text-emerald-600 rounded text-xs font-medium" x-text="item.kondisiPinjam"></span></td>
                                                 <td class="p-3 border-r text-gray-500" x-text="item.keterangan || '-'"></td>
                                                 <td class="p-3 text-center space-x-2">
-                                                    <button @click="returnPeminjaman(item)" class="text-emerald-600 hover:text-emerald-800 bg-emerald-50 px-2 py-1 rounded text-xs font-medium" title="Kembalikan Alat"><i class="fa-solid fa-rotate-left mr-1"></i> Kembalikan</button>
-                                                    <button @click="deletePeminjaman(item.id)" class="text-red-600 hover:text-red-800" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                                    <button @click="returnPeminjaman(item)" class="text-emerald-600 hover:text-emerald-800 bg-emerald-50 px-2 py-1 rounded text-xs font-medium"><i class="fa-solid fa-rotate-left mr-1"></i> Kembalikan</button>
+                                                    <button @click="deletePeminjaman(item.id)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </template>
@@ -279,8 +281,8 @@
                                                           }" x-text="item.kondisi.toUpperCase()"></span>
                                                 </td>
                                                 <td class="p-3 text-center space-x-2">
-                                                    <button x-show="item.kondisi === 'perbaikan'" @click="openPerbaikanModal(item)" title="Selesaikan Perbaikan" class="text-amber-600 hover:text-amber-800 bg-amber-50 px-2 py-1 rounded text-xs"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> Perbaikan</button>
-                                                    <button @click="deleteRiwayat(item.id)" class="text-red-600 hover:text-red-800" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                                    <button x-show="item.kondisi === 'perbaikan'" @click="openPerbaikanModal(item)" class="text-amber-600 hover:text-amber-800 bg-amber-50 px-2 py-1 rounded text-xs"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> Perbaikan</button>
+                                                    <button @click="deleteRiwayat(item.id)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </template>
@@ -631,10 +633,7 @@
                 },
                 returnPeminjaman(item) {
                     if (confirm(`Proses pengembalian alat untuk peminjam "${item.peminjam}"?`)) {
-                        // Hapus dari daftar peminjaman aktif
                         this.peminjaman = this.peminjaman.filter(p => p.id !== item.id);
-                        
-                        // Masukkan ke riwayat pengembalian
                         const newRiwayat = {
                             id: 'riw_' + Date.now(),
                             tanggalKembali: new Date().toISOString().split('T')[0],
