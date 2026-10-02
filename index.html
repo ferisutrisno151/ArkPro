@@ -33,7 +33,6 @@
     <header class="bg-brand-dark text-white shadow-md relative z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <!-- Hamburger Button -->
                 <button onclick="toggleSidebar()" class="text-slate-300 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition focus:outline-none">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
@@ -87,7 +86,7 @@
             </button>
         </div>
         <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
-            Inventaris Proyek v2.5 &copy; 2026
+            Inventaris Proyek v2.6 &copy; 2026
         </div>
     </aside>
 
@@ -98,7 +97,7 @@
         <section id="content-dashboard" class="space-y-6">
             <div>
                 <h2 class="text-xl font-bold text-slate-900">Dashboard Inventaris Alat Proyek</h2>
-                <p class="text-sm text-slate-500">Ringkasan kondisi dan pergerakan alat proyek secara real-time. Klik pada kartu untuk melihat rincian.</p>
+                <p class="text-sm text-slate-500">Ringkasan kondisi dan pergerakan alat proyek secara real-time berdasarkan logika operasional.</p>
             </div>
 
             <!-- Summary Cards -->
@@ -116,19 +115,6 @@
                     <div class="mt-4 flex items-center text-xs font-medium text-brand-primary"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
                 </div>
 
-                <div onclick="openRincian('rusak')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Alat Rusak / Perbaikan</p>
-                            <h3 id="card-rusak" class="text-2xl font-bold text-amber-600 mt-1">0 Unit</h3>
-                        </div>
-                        <div class="bg-amber-50 text-amber-600 p-3 rounded-xl group-hover:bg-amber-500 group-hover:text-white transition">
-                            <i class="fa-solid fa-triangle-exclamation text-lg"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-amber-600"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
-                </div>
-
                 <div onclick="openRincian('baik')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
                     <div class="flex items-center justify-between">
                         <div>
@@ -140,6 +126,19 @@
                         </div>
                     </div>
                     <div class="mt-4 flex items-center text-xs font-medium text-emerald-600"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
+                </div>
+
+                <div onclick="openRincian('rusak')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Alat Rusak / Perbaikan</p>
+                            <h3 id="card-rusak" class="text-2xl font-bold text-amber-600 mt-1">0 Unit</h3>
+                        </div>
+                        <div class="bg-amber-50 text-amber-600 p-3 rounded-xl group-hover:bg-amber-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-amber-600"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
                 </div>
 
                 <div onclick="openRincian('gudang')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-purple-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
@@ -173,6 +172,31 @@
                     <div class="h-64 relative flex items-center justify-center"><canvas id="conditionChart"></canvas></div>
                 </div>
             </div>
+
+            <!-- Tabel Daftar Alat yang Sedang Dipinjam di Dashboard -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-200 bg-slate-50 font-semibold text-xs text-slate-700 uppercase flex items-center space-x-2">
+                    <i class="fa-solid fa-handshake-angle text-brand-primary"></i>
+                    <span>Daftar Alat yang Sedang Dipinjam</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[700px]">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
+                                <th class="py-3 px-4 border-r border-slate-300">No</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Tgl Pinjam</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Peminjam</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Lokasi Kerja</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Nama Alat</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Serial No / Inv</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Vol Pinjam</th>
+                                <th class="py-3 px-4">Kondisi Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-loan-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
         <!-- TAB 2: DATA ALAT -->
@@ -194,22 +218,22 @@
 
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[900px]">
                         <thead>
-                            <tr class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                                <th class="py-3 px-4">No Inv</th>
-                                <th class="py-3 px-4">Kategori</th>
-                                <th class="py-3 px-4">Nama Equipment</th>
-                                <th class="py-3 px-4">Brand / Type</th>
-                                <th class="py-3 px-4">Tgl Beli</th>
-                                <th class="py-3 px-4">Lokasi</th>
-                                <th class="py-3 px-4">Kondisi</th>
-                                <th class="py-3 px-4">Vol</th>
-                                <th class="py-3 px-4">Satuan</th>
+                            <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
+                                <th class="py-3 px-4 border-r border-slate-300">No Inv</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Kategori</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Nama Equipment</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Brand / Type</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Tgl Beli</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Lokasi</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Kondisi</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Vol</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Satuan</th>
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="inventory-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        <tbody id="inventory-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -231,21 +255,21 @@
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-4 border-b border-slate-200 bg-slate-50 font-semibold text-xs text-slate-700 uppercase">Daftar Peminjaman Aktif</div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[900px]">
                         <thead>
-                            <tr class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                                <th class="py-3 px-4">No</th>
-                                <th class="py-3 px-4">Tgl Pinjam</th>
-                                <th class="py-3 px-4">Peminjam</th>
-                                <th class="py-3 px-4">Lokasi Kerja</th>
-                                <th class="py-3 px-4">Nama Alat</th>
-                                <th class="py-3 px-4">Serial No / Inv</th>
-                                <th class="py-3 px-4">Vol Pinjam</th>
-                                <th class="py-3 px-4">Kondisi / Status</th>
+                            <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
+                                <th class="py-3 px-4 border-r border-slate-300">No</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Tgl Pinjam</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Peminjam</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Lokasi Kerja</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Nama Alat</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Serial No / Inv</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Vol Pinjam</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Kondisi / Status</th>
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="loan-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        <tbody id="loan-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -254,19 +278,19 @@
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mt-8">
                 <div class="p-4 border-b border-slate-200 bg-slate-50 font-semibold text-xs text-slate-700 uppercase">Riwayat Pengembalian Alat</div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[800px]">
                         <thead>
-                            <tr class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                                <th class="py-3 px-4">No</th>
-                                <th class="py-3 px-4">Nama Peminjam</th>
-                                <th class="py-3 px-4">Nama Alat</th>
-                                <th class="py-3 px-4">Brand / Type</th>
-                                <th class="py-3 px-4">Tgl Kembali</th>
-                                <th class="py-3 px-4">Kondisi</th>
+                            <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
+                                <th class="py-3 px-4 border-r border-slate-300">No</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Nama Peminjam</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Nama Alat</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Brand / Type</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Tgl Kembali</th>
+                                <th class="py-3 px-4 border-r border-slate-300">Kondisi</th>
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="history-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        <tbody id="history-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -286,18 +310,18 @@
             </div>
             <div class="p-6 overflow-y-auto flex-grow">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[700px]">
                         <thead>
-                            <tr class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                                <th class="py-2.5 px-3">No Inv</th>
-                                <th class="py-2.5 px-3">Nama Alat</th>
-                                <th class="py-2.5 px-3">Brand/Type</th>
-                                <th class="py-2.5 px-3">Kondisi</th>
-                                <th class="py-2.5 px-3">Lokasi</th>
+                            <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
+                                <th class="py-2.5 px-3 border-r border-slate-300">No Inv</th>
+                                <th class="py-2.5 px-3 border-r border-slate-300">Nama Alat</th>
+                                <th class="py-2.5 px-3 border-r border-slate-300">Brand/Type</th>
+                                <th class="py-2.5 px-3 border-r border-slate-300">Kondisi</th>
+                                <th class="py-2.5 px-3 border-r border-slate-300">Lokasi</th>
                                 <th class="py-2.5 px-3">Volume</th>
                             </tr>
                         </thead>
-                        <tbody id="rincian-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                        <tbody id="rincian-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -307,7 +331,7 @@
         </div>
     </div>
 
-    <!-- MODAL: FORM INPUT / EDIT ALAT BARU (MULTI-ITEM) -->
+    <!-- MODAL: FORM INPUT / EDIT ALAT BARU (SATU TANGGAL, MULTI-ITEM) -->
     <div id="modal-input-alat" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
             <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
@@ -317,39 +341,39 @@
             <div class="p-6 overflow-y-auto flex-grow space-y-4">
                 <form id="form-alat" onsubmit="saveInventarisAlat(event)" class="space-y-4">
                     <input type="hidden" id="edit-index-alat" value="">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pembelian</label>
-                            <input type="date" id="input-tgl-beli" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pembelian (Acuan Utama)</label>
+                            <input type="date" id="input-tgl-beli" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Inventaris (Dasar)</label>
-                            <input type="text" id="input-no-inv-base" placeholder="INV-257" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Inventaris Dasar</label>
+                            <input type="text" id="input-no-inv-base" placeholder="INV-257" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
                         </div>
                     </div>
 
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-semibold text-slate-600">Daftar Item Barang</label>
+                            <label class="text-xs font-semibold text-slate-600">Daftar Item Barang Berdasarkan Tanggal Di Atas</label>
                             <button type="button" onclick="addAlatRow()" class="text-xs font-medium text-brand-primary hover:underline flex items-center space-x-1">
                                 <i class="fa-solid fa-plus"></i><span>Tambah Baris Item</span>
                             </button>
                         </div>
-                        <div class="border border-slate-200 rounded-xl overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
+                        <div class="border border-slate-300 rounded-xl overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs min-w-[700px] border border-slate-300">
                                 <thead>
-                                    <tr class="bg-slate-50 text-slate-500 uppercase border-b border-slate-200">
-                                        <th class="py-2 px-2.5">Kategori</th>
-                                        <th class="py-2 px-2.5">Nama Alat</th>
-                                        <th class="py-2 px-2.5">Brand / Type</th>
-                                        <th class="py-2 px-2.5">Qty</th>
-                                        <th class="py-2 px-2.5">Sat</th>
-                                        <th class="py-2 px-2.5">Lokasi</th>
-                                        <th class="py-2 px-2.5">Kondisi</th>
-                                        <th class="py-2 px-2.5 text-center">Aksi</th>
+                                    <tr class="bg-slate-100 text-slate-600 uppercase border-b border-slate-300">
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Kategori</th>
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Nama Alat</th>
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Brand / Type</th>
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Qty</th>
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Sat</th>
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Lokasi</th>
+                                        <th class="py-2.5 px-2.5 border-r border-slate-300">Kondisi</th>
+                                        <th class="py-2.5 px-2.5 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="multi-alat-rows" class="divide-y divide-slate-200"></tbody>
+                                <tbody id="multi-alat-rows" class="divide-y divide-slate-300"></tbody>
                             </table>
                         </div>
                     </div>
@@ -363,7 +387,7 @@
         </div>
     </div>
 
-    <!-- MODAL: FORM PEMINJAMAN ALAT (MULTI-ITEM) -->
+    <!-- MODAL: FORM PEMINJAMAN ALAT (SATU TANGGAL & NAMA PEMINJAM, MULTI-ITEM) -->
     <div id="modal-peminjaman" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
             <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
@@ -373,39 +397,39 @@
             <div class="p-6 overflow-y-auto flex-grow space-y-4">
                 <form id="form-peminjaman" onsubmit="savePeminjaman(event)" class="space-y-4">
                     <input type="hidden" id="edit-index-loan" value="">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pinjam</label>
-                            <input type="date" id="loan-tgl" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pinjam (Acuan Utama)</label>
+                            <input type="date" id="loan-tgl" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Peminjam</label>
-                            <input type="text" id="loan-peminjam" placeholder="Nama peminjam" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Peminjam (Acuan Utama)</label>
+                            <input type="text" id="loan-peminjam" placeholder="Nama peminjam" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Lokasi Pekerjaan / Tujuan</label>
-                            <input type="text" id="loan-lokasi" placeholder="Contoh: Lantai 2" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                            <input type="text" id="loan-lokasi" placeholder="Contoh: Lantai 2" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-brand-primary outline-none">
                         </div>
                     </div>
 
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-semibold text-slate-600">Pilih Beberapa Item Alat & Keterangan</label>
+                            <label class="text-xs font-semibold text-slate-600">Pilih Beberapa Item Alat untuk Peminjam Ini</label>
                             <button type="button" onclick="addLoanItemRow()" class="text-xs font-medium text-brand-primary hover:underline flex items-center space-x-1">
                                 <i class="fa-solid fa-plus"></i><span>Tambah Item Alat</span>
                             </button>
                         </div>
-                        <div class="border border-slate-200 rounded-xl overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
+                        <div class="border border-slate-300 rounded-xl overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs min-w-[650px] border border-slate-300">
                                 <thead>
-                                    <tr class="bg-slate-50 text-slate-500 uppercase border-b border-slate-200">
-                                        <th class="py-2 px-3">Pilih Alat dari Inventaris</th>
-                                        <th class="py-2 px-3 w-28">Vol Pinjam</th>
-                                        <th class="py-2 px-3">Kondisi Saat Ini</th>
-                                        <th class="py-2 px-3 w-16 text-center">Aksi</th>
+                                    <tr class="bg-slate-100 text-slate-600 uppercase border-b border-slate-300">
+                                        <th class="py-2.5 px-3 border-r border-slate-300">Pilih Alat dari Inventaris</th>
+                                        <th class="py-2.5 px-3 w-28 border-r border-slate-300">Vol Pinjam</th>
+                                        <th class="py-2.5 px-3 border-r border-slate-300">Kondisi Saat Ini</th>
+                                        <th class="py-2.5 px-3 w-16 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="loan-item-rows" class="divide-y divide-slate-200"></tbody>
+                                <tbody id="loan-item-rows" class="divide-y divide-slate-300"></tbody>
                             </table>
                         </div>
                     </div>
@@ -436,8 +460,8 @@
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Status / Kondisi Perbaikan</label>
                         <select id="repair-status" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
-                            <option value="Bisa Diperbaiki">Bisa Diperbaiki</option>
-                            <option value="Rusak Total">Rusak Total</option>
+                            <option value="Bisa Diperbaiki (Baik)">Bisa Diperbaiki (Menjadi Baik)</option>
+                            <option value="Rusak Total">Rusak Total / Tidak Bisa Diperbaiki</option>
                         </select>
                     </div>
                     <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200">
@@ -455,7 +479,7 @@
         let inventoryData = JSON.parse(localStorage.getItem('app_inventory')) || [
             { id: 'INV-001', kategori: 'Tool', nama: 'Gerinda Tangan', brand: 'Makita 4"', tglBeli: '2026-09-01', lokasi: 'Gudang ARK', kondisi: 'Baik', vol: 5, satuan: 'Unit' },
             { id: 'INV-002', kategori: 'Tool', nama: 'Bor Tangan', brand: 'Bosch', tglBeli: '2026-09-03', lokasi: 'Gudang ARK', kondisi: 'Baik', vol: 3, satuan: 'Unit' },
-            { id: 'INV-003', kategori: 'Equipment', nama: 'Vibrator Beton', brand: 'Honda', tglBeli: '2026-09-05', lokasi: 'Site Proyek', kondisi: 'Rusak / Perbaikan', vol: 1, satuan: 'Unit' }
+            { id: 'INV-003', kategori: 'Equipment', nama: 'Vibrator Beton', brand: 'Honda', tglBeli: '2026-09-05', lokasi: 'Site Proyek', kondisi: 'Baik', vol: 1, satuan: 'Unit' }
         ];
 
         let loanData = JSON.parse(localStorage.getItem('app_loans')) || [];
@@ -498,19 +522,65 @@
             renderHistoryTable();
         }
 
-        // Render Dashboard
+        // Render Dashboard & Real-Time Logic
         function renderDashboard() {
             let totalUnit = inventoryData.reduce((sum, item) => sum + Number(item.vol), 0);
-            let rusakUnit = inventoryData.filter(i => i.kondisi.toLowerCase().includes('rusak') || i.kondisi.toLowerCase().includes('perbaikan')).reduce((sum, item) => sum + Number(item.vol), 0);
-            let baikUnit = inventoryData.filter(i => i.kondisi.toLowerCase().includes('baik')).reduce((sum, item) => sum + Number(item.vol), 0);
-            let gudangUnit = inventoryData.filter(i => i.lokasi.toLowerCase().includes('gudang')).reduce((sum, item) => sum + Number(item.vol), 0);
+            let totalPinjam = loanData.reduce((sum, item) => sum + Number(item.vol), 0);
+            
+            // Alat kembali kondisi baik / selesai perbaikan
+            let kembaliBaikCount = historyData
+                .filter(h => h.kondisi.toLowerCase().includes('baik') || h.kondisi.toLowerCase().includes('selesai'))
+                .reduce((sum, item) => sum + Number(item.vol || 1), 0);
+
+            // Panel 2: Alat Kondisi Baik = (Data Inventaris - Peminjaman) + Alat kembali kondisi baik / selesai perbaikan
+            let baseBaikInventory = inventoryData
+                .filter(i => i.kondisi.toLowerCase().includes('baik'))
+                .reduce((sum, item) => sum + Number(item.vol), 0);
+            let baikUnit = Math.max(0, baseBaikInventory - totalPinjam) + kembaliBaikCount;
+
+            // Panel 3: Alat Rusak / Perbaikan = Ambil data dari riwayat pengembalian alat hanya dengan kondisi rusak / perbaikan dan dikurangi jika sudah diperbaiki jadi baik
+            let rusakRiwayatCount = historyData
+                .filter(h => h.kondisi.toLowerCase().includes('rusak') || h.kondisi.toLowerCase().includes('perbaikan'))
+                .reduce((sum, item) => sum + Number(item.vol || 1), 0);
+            let diperbaikiCount = historyData
+                .filter(h => h.kondisi.toLowerCase().includes('bisa diperbaiki') || h.kondisi.toLowerCase().includes('baik'))
+                .reduce((sum, item) => sum + Number(item.vol || 1), 0);
+            let rusakUnit = Math.max(0, rusakRiwayatCount);
+
+            // Panel 4: Tersedia di Gudang = Data Inventaris - Peminjaman
+            let gudangUnit = Math.max(0, totalUnit - totalPinjam);
 
             document.getElementById('card-total').innerText = `${totalUnit} Unit`;
-            document.getElementById('card-rusak').innerText = `${rusakUnit} Unit`;
             document.getElementById('card-baik').innerText = `${baikUnit} Unit`;
+            document.getElementById('card-rusak').innerText = `${rusakUnit} Unit`;
             document.getElementById('card-gudang').innerText = `${gudangUnit} Unit`;
 
             renderCharts(baikUnit, rusakUnit);
+            renderDashboardLoanTable();
+        }
+
+        function renderDashboardLoanTable() {
+            const tbody = document.getElementById('dashboard-loan-table-body');
+            tbody.innerHTML = '';
+            if (loanData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400 italic">Tidak ada alat yang sedang dipinjam saat ini.</td></tr>`;
+                return;
+            }
+            loanData.forEach((loan, index) => {
+                let conditionBadge = loan.kondisiStatus === 'Baik' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600';
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium">${index + 1}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.tgl}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium text-slate-900">${loan.peminjam}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.lokasi}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.namaAlat}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-mono text-xs">${loan.noInv}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.vol} Unit</td>
+                        <td class="py-3 px-4"><span class="${conditionBadge} px-2 py-0.5 rounded-full text-[10px] font-semibold">${loan.kondisiStatus}</span></td>
+                    </tr>
+                `;
+            });
         }
 
         function renderCharts(baik, rusak) {
@@ -551,29 +621,49 @@
             let filtered = [];
             let titleText = '';
             if (type === 'total') { filtered = inventoryData; titleText = 'Rincian Semua Item Inventaris'; }
-            else if (type === 'rusak') { filtered = inventoryData.filter(i => i.kondisi.toLowerCase().includes('rusak') || i.kondisi.toLowerCase().includes('perbaikan')); titleText = 'Rincian Alat Rusak / Perbaikan'; }
             else if (type === 'baik') { filtered = inventoryData.filter(i => i.kondisi.toLowerCase().includes('baik')); titleText = 'Rincian Alat Kondisi Baik'; }
-            else if (type === 'gudang') { filtered = inventoryData.filter(i => i.lokasi.toLowerCase().includes('gudang')); titleText = 'Rincian Alat Tersedia di Gudang'; }
+            else if (type === 'rusak') { 
+                filtered = historyData.filter(h => h.kondisi.toLowerCase().includes('rusak') || h.kondisi.toLowerCase().includes('perbaikan')); 
+                titleText = 'Rincian Alat Rusak / Perbaikan (Dari Riwayat)';
+            }
+            else if (type === 'gudang') { 
+                let activeIds = loanData.map(l => l.noInv);
+                filtered = inventoryData.filter(i => !activeIds.includes(i.id)); 
+                titleText = 'Rincian Alat Tersedia di Gudang'; 
+            }
 
             titleElem.innerText = titleText;
-            let totalQty = filtered.reduce((sum, item) => sum + Number(item.vol), 0);
+            let totalQty = filtered.reduce((sum, item) => sum + Number(item.vol || 1), 0);
             subtitleElem.innerText = `Total Quantity: ${totalQty} Unit`;
 
             if (filtered.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-400 italic">Tidak ada data untuk kategori ini.</td></tr>`;
             } else {
                 filtered.forEach(item => {
-                    let badgeColor = item.kondisi.toLowerCase().includes('baik') ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600';
-                    tbody.innerHTML += `
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="py-2.5 px-3 font-mono text-brand-primary">${item.id}</td>
-                            <td class="py-2.5 px-3 font-medium">${item.nama}</td>
-                            <td class="py-2.5 px-3 text-slate-500">${item.brand}</td>
-                            <td class="py-2.5 px-3"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${item.kondisi}</span></td>
-                            <td class="py-2.5 px-3">${item.lokasi}</td>
-                            <td class="py-2.5 px-3 font-semibold">${item.vol} Unit</td>
-                        </tr>
-                    `;
+                    if (type === 'rusak') {
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="py-2.5 px-3 border-r border-slate-300 font-mono text-brand-primary">-</td>
+                                <td class="py-2.5 px-3 border-r border-slate-300 font-medium">${item.namaAlat}</td>
+                                <td class="py-2.5 px-3 border-r border-slate-300 text-slate-500">${item.brand}</td>
+                                <td class="py-2.5 px-3 border-r border-slate-300"><span class="bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full text-[10px] font-semibold">${item.kondisi}</span></td>
+                                <td class="py-2.5 px-3 border-r border-slate-300">Peminjam: ${item.peminjam}</td>
+                                <td class="py-2.5 px-3 font-semibold">1 Unit</td>
+                            </tr>
+                        `;
+                    } else {
+                        let badgeColor = item.kondisi.toLowerCase().includes('baik') ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600';
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="py-2.5 px-3 border-r border-slate-300 font-mono text-brand-primary">${item.id}</td>
+                                <td class="py-2.5 px-3 border-r border-slate-300 font-medium">${item.nama}</td>
+                                <td class="py-2.5 px-3 border-r border-slate-300 text-slate-500">${item.brand}</td>
+                                <td class="py-2.5 px-3 border-r border-slate-300"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${item.kondisi}</span></td>
+                                <td class="py-2.5 px-3 border-r border-slate-300">${item.lokasi}</td>
+                                <td class="py-2.5 px-3 font-semibold">${item.vol} Unit</td>
+                            </tr>
+                        `;
+                    }
                 });
             }
             modal.classList.remove('hidden');
@@ -592,15 +682,15 @@
                 let badgeColor = item.kondisi.toLowerCase().includes('baik') ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600';
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="py-3 px-4 font-mono text-brand-primary font-medium">${item.id}</td>
-                        <td class="py-3 px-4">${item.kategori}</td>
-                        <td class="py-3 px-4 font-medium text-slate-900">${item.nama}</td>
-                        <td class="py-3 px-4 text-slate-500">${item.brand}</td>
-                        <td class="py-3 px-4">${item.tglBeli}</td>
-                        <td class="py-3 px-4">${item.lokasi}</td>
-                        <td class="py-3 px-4"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${item.kondisi}</span></td>
-                        <td class="py-3 px-4 font-semibold">${item.vol}</td>
-                        <td class="py-3 px-4">${item.satuan}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-mono text-brand-primary font-medium">${item.id}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${item.kategori}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium text-slate-900">${item.nama}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 text-slate-500">${item.brand}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${item.tglBeli}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${item.lokasi}</td>
+                        <td class="py-3 px-4 border-r border-slate-300"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${item.kondisi}</span></td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-semibold">${item.vol}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${item.satuan}</td>
                         <td class="py-3 px-4 text-center space-x-2">
                             <button onclick="editInventoryItem(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Edit Item"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button onclick="deleteInventoryItem(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus Item"><i class="fa-solid fa-trash-can"></i></button>
@@ -630,13 +720,13 @@
             const tbody = document.getElementById('multi-alat-rows');
             tbody.innerHTML = `
                 <tr class="hover:bg-slate-50 transition">
-                    <td class="p-2"><input type="text" value="${item.kategori}" class="row-kategori w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                    <td class="p-2"><input type="text" value="${item.nama}" class="row-nama w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                    <td class="p-2"><input type="text" value="${item.brand}" class="row-brand w-full text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
-                    <td class="p-2"><input type="number" value="${item.vol}" min="1" class="row-vol w-16 text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                    <td class="p-2"><input type="text" value="${item.satuan}" class="row-satuan w-20 text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
-                    <td class="p-2"><input type="text" value="${item.lokasi}" class="row-lokasi w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                    <td class="p-2">
+                    <td class="p-2 border-r border-slate-300"><input type="text" value="${item.kategori}" class="row-kategori w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2 border-r border-slate-300"><input type="text" value="${item.nama}" class="row-nama w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2 border-r border-slate-300"><input type="text" value="${item.brand}" class="row-brand w-full text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
+                    <td class="p-2 border-r border-slate-300"><input type="number" value="${item.vol}" min="1" class="row-vol w-16 text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2 border-r border-slate-300"><input type="text" value="${item.satuan}" class="row-satuan w-20 text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
+                    <td class="p-2 border-r border-slate-300"><input type="text" value="${item.lokasi}" class="row-lokasi w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2 border-r border-slate-300">
                         <select class="row-kondisi text-xs border border-slate-300 rounded p-1.5 outline-none">
                             <option value="Baik" ${item.kondisi === 'Baik' ? 'selected' : ''}>Baik</option>
                             <option value="Rusak / Perbaikan" ${item.kondisi.includes('Rusak') ? 'selected' : ''}>Rusak / Perbaikan</option>
@@ -655,13 +745,13 @@
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-slate-50 transition';
             tr.innerHTML = `
-                <td class="p-2"><input type="text" placeholder="Tool / Heavy Equip" class="row-kategori w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                <td class="p-2"><input type="text" placeholder="Nama Alat" class="row-nama w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                <td class="p-2"><input type="text" placeholder="Brand / Type" class="row-brand w-full text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
-                <td class="p-2"><input type="number" value="1" min="1" class="row-vol w-16 text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                <td class="p-2"><input type="text" value="Unit" class="row-satuan w-20 text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
-                <td class="p-2"><input type="text" value="Gudang Utama" class="row-lokasi w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                <td class="p-2">
+                <td class="p-2 border-r border-slate-300"><input type="text" placeholder="Tool / Heavy Equip" class="row-kategori w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                <td class="p-2 border-r border-slate-300"><input type="text" placeholder="Nama Alat" class="row-nama w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                <td class="p-2 border-r border-slate-300"><input type="text" placeholder="Brand / Type" class="row-brand w-full text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
+                <td class="p-2 border-r border-slate-300"><input type="number" value="1" min="1" class="row-vol w-16 text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                <td class="p-2 border-r border-slate-300"><input type="text" value="Unit" class="row-satuan w-20 text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
+                <td class="p-2 border-r border-slate-300"><input type="text" value="Gudang Utama" class="row-lokasi w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                <td class="p-2 border-r border-slate-300">
                     <select class="row-kondisi text-xs border border-slate-300 rounded p-1.5 outline-none">
                         <option value="Baik">Baik</option>
                         <option value="Rusak / Perbaikan">Rusak / Perbaikan</option>
@@ -731,7 +821,7 @@
             const tbody = document.getElementById('loan-table-body');
             tbody.innerHTML = '';
             if (loanData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-400 italic">Belum ada data peminjaman.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-400 italic">Belum ada data peminjaman aktif.</td></tr>`;
                 return;
             }
             loanData.forEach((loan, index) => {
@@ -742,14 +832,14 @@
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="py-3 px-4 font-medium">${index + 1}</td>
-                        <td class="py-3 px-4">${loan.tgl}</td>
-                        <td class="py-3 px-4 font-medium text-slate-900">${loan.peminjam}</td>
-                        <td class="py-3 px-4">${loan.lokasi}</td>
-                        <td class="py-3 px-4">${loan.namaAlat}</td>
-                        <td class="py-3 px-4 font-mono text-xs">${loan.noInv}</td>
-                        <td class="py-3 px-4">${loan.vol} Unit</td>
-                        <td class="py-3 px-4">
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium">${index + 1}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.tgl}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium text-slate-900">${loan.peminjam}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.lokasi}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.namaAlat}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-mono text-xs">${loan.noInv}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${loan.vol} Unit</td>
+                        <td class="py-3 px-4 border-r border-slate-300">
                             <select onchange="updateLoanCondition(${index}, this.value)" class="text-xs border border-slate-300 rounded p-1 outline-none ${conditionBadge} font-semibold">
                                 <option value="Baik" ${loan.kondisiStatus === 'Baik' ? 'selected' : ''}>Baik</option>
                                 <option value="Perbaikan" ${loan.kondisiStatus === 'Perbaikan' ? 'selected' : ''}>Perbaikan</option>
@@ -759,7 +849,7 @@
                         <td class="py-3 px-4 text-center space-x-2">
                             <button onclick="editLoan(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Edit Peminjaman"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button onclick="deleteLoan(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus Peminjaman"><i class="fa-solid fa-trash-can"></i></button>
-                            <button onclick="moveToHistory(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[10px] font-medium" title="Selesaikan / Kembalikan">Kembalikan</button>
+                            <button onclick="moveToHistory(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-medium shadow-sm" title="Kembalikan Alat">Kembalikan</button>
                         </td>
                     </tr>
                 `;
@@ -795,16 +885,16 @@
             });
 
             tr.innerHTML = `
-                <td class="p-2"><select class="loan-item-select w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required>${optionsHtml}</select></td>
-                <td class="p-2"><input type="number" value="${selectedVol}" min="1" class="loan-item-vol w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
-                <td class="p-2">
+                <td class="p-2 border-r border-slate-300"><select class="loan-item-select w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required>${optionsHtml}</select></td>
+                <td class="p-2 border-r border-slate-300"><input type="number" value="${selectedVol}" min="1" class="loan-item-vol w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                <td class="p-2 border-r border-slate-300">
                     <select class="loan-item-kondisi w-full text-xs border border-slate-300 rounded p-1.5 outline-none font-semibold">
                         <option value="Baik" ${selectedCond === 'Baik' ? 'selected' : ''}>Baik</option>
                         <option value="Perbaikan" ${selectedCond === 'Perbaikan' ? 'selected' : ''}>Perbaikan</option>
                         <option value="Rusak" ${selectedCond === 'Rusak' ? 'selected' : ''}>Rusak</option>
                     </select>
                 </td>
-                <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
+                <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
             `;
             tbody.appendChild(tr);
         }
@@ -849,6 +939,7 @@
             localStorage.setItem('app_loans', JSON.stringify(loanData));
             closeModalPeminjaman();
             renderLoanTable();
+            renderDashboard();
         }
 
         function editLoan(index) {
@@ -868,6 +959,7 @@
                 loanData.splice(index, 1);
                 localStorage.setItem('app_loans', JSON.stringify(loanData));
                 renderLoanTable();
+                renderDashboard();
             }
         }
 
@@ -880,13 +972,15 @@
                 namaAlat: loan.namaAlat,
                 brand: foundInv ? foundInv.brand : '-',
                 tglKembali: new Date().toISOString().split('T')[0],
-                kondisi: loan.kondisiStatus
+                kondisi: loan.kondisiStatus,
+                vol: loan.vol
             });
             loanData.splice(index, 1);
             localStorage.setItem('app_loans', JSON.stringify(loanData));
             localStorage.setItem('app_history', JSON.stringify(historyData));
             renderLoanTable();
             renderHistoryTable();
+            renderDashboard();
             alert('Alat berhasil dikembalikan dan tercatat di riwayat.');
         }
 
@@ -899,15 +993,15 @@
                 return;
             }
             historyData.forEach((hist, index) => {
-                let badgeColor = hist.kondisi === 'Baik' ? 'bg-emerald-50 text-emerald-600' : (hist.kondisi === 'Perbaikan' ? 'bg-amber-50 text-amber-600' : 'bg-rose-50 text-rose-600');
+                let badgeColor = hist.kondisi.toLowerCase().includes('baik') ? 'bg-emerald-50 text-emerald-600' : (hist.kondisi.toLowerCase().includes('perbaikan') ? 'bg-amber-50 text-amber-600' : 'bg-rose-50 text-rose-600');
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="py-3 px-4 font-medium">${index + 1}</td>
-                        <td class="py-3 px-4 font-medium text-slate-900">${hist.peminjam}</td>
-                        <td class="py-3 px-4">${hist.namaAlat}</td>
-                        <td class="py-3 px-4 text-slate-500">${hist.brand}</td>
-                        <td class="py-3 px-4">${hist.tglKembali}</td>
-                        <td class="py-3 px-4"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${hist.kondisi}</span></td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium">${index + 1}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 font-medium text-slate-900">${hist.peminjam}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${hist.namaAlat}</td>
+                        <td class="py-3 px-4 border-r border-slate-300 text-slate-500">${hist.brand}</td>
+                        <td class="py-3 px-4 border-r border-slate-300">${hist.tglKembali}</td>
+                        <td class="py-3 px-4 border-r border-slate-300"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${hist.kondisi}</span></td>
                         <td class="py-3 px-4 text-center space-x-2">
                             <button onclick="openModalPerbaikan(${index})" class="text-amber-500 hover:text-amber-700 p-1" title="Form Perbaikan"><i class="fa-solid fa-screwdriver-wrench"></i></button>
                             <button onclick="editHistory(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Edit Riwayat"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -936,6 +1030,7 @@
                 historyData[histIdx].kondisi = repairStatus;
                 localStorage.setItem('app_history', JSON.stringify(historyData));
                 renderHistoryTable();
+                renderDashboard();
                 closeModalPerbaikan();
                 alert(`Perbaikan alat tercatat pada ${repairTgl} dengan status: ${repairStatus}`);
             }
@@ -956,6 +1051,7 @@
                 historyData.splice(index, 1);
                 localStorage.setItem('app_history', JSON.stringify(historyData));
                 renderHistoryTable();
+                renderDashboard();
             }
         }
 
