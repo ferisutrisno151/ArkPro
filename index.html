@@ -40,7 +40,7 @@
                     <i class="fa-solid fa-helmet-safety text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">Inventaris Alat Proyek</h1>
+                    <h1 class="font-bold text-lg leading-tight">Inventaris Alat</h1>
                     <p class="text-xs text-slate-400">Monitoring System</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 </button>
                 <div class="bg-brand-primary text-white px-3 py-1.5 rounded-lg text-xs font-medium flex items-center space-x-1.5 shadow-sm">
                     <i class="fa-solid fa-user-shield"></i>
-                    <span>Admin Proyek</span>
+                    <span>Admin ARK</span>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                 <div class="bg-brand-primary p-2 rounded-lg text-white">
                     <i class="fa-solid fa-helmet-safety text-lg"></i>
                 </div>
-                <span class="font-bold text-base">Menu Navigasi</span>
+                <span class="font-bold text-base">ARKPro</span>
             </div>
             <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white p-2">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -180,17 +180,17 @@
                     <span>Daftar Alat yang Sedang Dipinjam</span>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[700px]">
+                    <table class="w-full text-left border-collapse text-[10px] border border-slate-300 min-w-[700px]">
                         <thead>
                             <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
-                                <th class="py-3 px-4 border-r border-slate-300">No</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Tgl Pinjam</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Peminjam</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Lokasi Kerja</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Nama Alat</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Serial No / Inv</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Vol Pinjam</th>
-                                <th class="py-3 px-4">Kondisi Status</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">No</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Tgl Pinjam</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Peminjam</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Lokasi Kerja</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Nama Alat</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Serial No / Inv</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Vol Pinjam</th>
+                                <th class="py-1 px-1.5">Kondisi Status</th>
                             </tr>
                         </thead>
                         <tbody id="dashboard-loan-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
@@ -218,19 +218,19 @@
 
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs border border-slate-300 min-w-[900px]">
+                    <table class="w-full text-left border-collapse text-[10px] border border-slate-300 min-w-[900px]">
                         <thead>
                             <tr class="bg-slate-100 text-slate-600 uppercase tracking-wider border-b border-slate-300">
-                                <th class="py-3 px-4 border-r border-slate-300">No Inv</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Kategori</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Nama Equipment</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Brand / Type</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Tgl Beli</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Lokasi</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Kondisi</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Vol</th>
-                                <th class="py-3 px-4 border-r border-slate-300">Satuan</th>
-                                <th class="py-3 px-4 text-center">Aksi</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">No Inv</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Kategori</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Nama Equipment</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Brand / Type</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Tgl Beli</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Lokasi</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Kondisi</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Vol</th>
+                                <th class="py-1 px-1.5 border-r border-slate-300">Satuan</th>
+                                <th class="py-1 px-1.5 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="inventory-table-body" class="divide-y divide-slate-300 text-slate-700"></tbody>
