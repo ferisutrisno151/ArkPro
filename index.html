@@ -29,10 +29,14 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Top Navigation -->
-    <header class="bg-brand-dark text-white shadow-md">
+    <!-- Top Navigation with Hamburger Menu -->
+    <header class="bg-brand-dark text-white shadow-md relative z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
+                <!-- Hamburger Button -->
+                <button onclick="toggleSidebar()" class="text-slate-300 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
                 <div class="bg-brand-primary p-2 rounded-lg text-white">
                     <i class="fa-solid fa-helmet-safety text-xl"></i>
                 </div>
@@ -52,24 +56,40 @@
                 </div>
             </div>
         </div>
-        <!-- Sub Navigation Tabs -->
-        <div class="bg-brand-nav border-t border-slate-800 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto flex space-x-6">
-                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn py-3 text-sm font-medium border-b-2 border-brand-primary text-white flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </button>
-                <button onclick="switchTab('data-alat')" id="tab-data-alat" class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-tools"></i>
-                    <span>Data Alat</span>
-                </button>
-                <button onclick="switchTab('peminjaman')" id="tab-peminjaman" class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center space-x-2 transition">
-                    <i class="fa-solid fa-handshake-angle"></i>
-                    <span>Peminjaman</span>
-                </button>
-            </div>
-        </div>
     </header>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden transition-opacity" onclick="toggleSidebar()"></div>
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-brand-dark text-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-primary p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-helmet-safety text-lg"></i>
+                </div>
+                <span class="font-bold text-base">Menu Navigasi</span>
+            </div>
+            <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="flex-grow py-4 px-3 space-y-1">
+            <button onclick="switchTab('dashboard'); toggleSidebar();" id="tab-dashboard" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium bg-brand-primary text-white transition">
+                <i class="fa-solid fa-chart-pie w-5"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="switchTab('data-alat'); toggleSidebar();" id="tab-data-alat" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-tools w-5"></i>
+                <span>Data Alat</span>
+            </button>
+            <button onclick="switchTab('peminjaman'); toggleSidebar();" id="tab-peminjaman" class="sidebar-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                <i class="fa-solid fa-handshake-angle w-5"></i>
+                <span>Peminjaman & Riwayat</span>
+            </button>
+        </div>
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+            Inventaris Proyek v2.5 &copy; 2026
+        </div>
+    </aside>
 
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
@@ -83,7 +103,6 @@
 
             <!-- Summary Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Total Item -->
                 <div onclick="openRincian('total')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-brand-primary cursor-pointer transition transform hover:-translate-y-0.5 relative group">
                     <div class="flex items-center justify-between">
                         <div>
@@ -94,13 +113,9 @@
                             <i class="fa-solid fa-boxes-stacked text-lg"></i>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-brand-primary">
-                        <span>Klik rincian</span>
-                        <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-brand-primary"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
                 </div>
 
-                <!-- Rusak / Perbaikan -->
                 <div onclick="openRincian('rusak')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-amber-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
                     <div class="flex items-center justify-between">
                         <div>
@@ -111,13 +126,9 @@
                             <i class="fa-solid fa-triangle-exclamation text-lg"></i>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-amber-600">
-                        <span>Klik rincian</span>
-                        <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-amber-600"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
                 </div>
 
-                <!-- Kondisi Baik -->
                 <div onclick="openRincian('baik')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
                     <div class="flex items-center justify-between">
                         <div>
@@ -128,13 +139,9 @@
                             <i class="fa-solid fa-circle-check text-lg"></i>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-emerald-600">
-                        <span>Klik rincian</span>
-                        <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-emerald-600"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
                 </div>
 
-                <!-- Tersedia di Gudang -->
                 <div onclick="openRincian('gudang')" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-purple-500 cursor-pointer transition transform hover:-translate-y-0.5 relative group">
                     <div class="flex items-center justify-between">
                         <div>
@@ -145,71 +152,25 @@
                             <i class="fa-solid fa-warehouse text-lg"></i>
                         </div>
                     </div>
-                    <div class="mt-4 flex items-center text-xs font-medium text-purple-600">
-                        <span>Klik rincian</span>
-                        <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </div>
+                    <div class="mt-4 flex items-center text-xs font-medium text-purple-600"><span>Klik rincian</span><i class="fa-solid fa-arrow-right ml-1"></i></div>
                 </div>
             </div>
 
             <!-- Charts Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Grafik Volume Unit -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-semibold text-sm text-slate-800 flex items-center space-x-2">
-                            <i class="fa-solid fa-chart-column text-brand-primary"></i>
-                            <span>Grafik Volume Unit Alat Proyek</span>
-                        </h3>
-                    </div>
-                    <div class="h-64 relative">
-                        <canvas id="volumeChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Proporsi Kondisi Alat -->
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-semibold text-sm text-slate-800 flex items-center space-x-2">
-                            <i class="fa-solid fa-chart-pie text-emerald-600"></i>
-                            <span>Proporsi Kondisi Alat</span>
-                        </h3>
-                    </div>
-                    <div class="h-64 relative flex items-center justify-center">
-                        <canvas id="conditionChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Active Loan Table Preview -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="p-5 border-b border-slate-200 flex items-center justify-between">
-                    <h3 class="font-semibold text-sm text-slate-800 flex items-center space-x-2">
-                        <i class="fa-solid fa-clock-rotate-left text-brand-primary"></i>
-                        <span>Daftar Alat Yang Sedang Dipinjam</span>
+                    <h3 class="font-semibold text-sm text-slate-800 flex items-center space-x-2 mb-4">
+                        <i class="fa-solid fa-chart-column text-brand-primary"></i>
+                        <span>Grafik Volume Unit Alat Proyek</span>
                     </h3>
-                    <button onclick="switchTab('peminjaman')" class="text-xs font-medium text-brand-primary hover:underline">Kelola Peminjaman &rarr;</button>
+                    <div class="h-64 relative"><canvas id="volumeChart"></canvas></div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                                <th class="py-3 px-4">No</th>
-                                <th class="py-3 px-4">Tgl Pinjam</th>
-                                <th class="py-3 px-4">Peminjam</th>
-                                <th class="py-3 px-4">Nama Alat</th>
-                                <th class="py-3 px-4">Serial No / Inv</th>
-                                <th class="py-3 px-4">Lokasi Kerja</th>
-                                <th class="py-3 px-4">Vol Pinjam</th>
-                                <th class="py-3 px-4">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dashboard-active-loans" class="divide-y divide-slate-200 text-slate-700">
-                            <tr>
-                                <td colspan="8" class="text-center py-6 text-slate-400 italic">Belum ada data peminjaman aktif.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-semibold text-sm text-slate-800 flex items-center space-x-2 mb-4">
+                        <i class="fa-solid fa-chart-pie text-emerald-600"></i>
+                        <span>Proporsi Kondisi Alat</span>
+                    </h3>
+                    <div class="h-64 relative flex items-center justify-center"><canvas id="conditionChart"></canvas></div>
                 </div>
             </div>
         </section>
@@ -223,17 +184,14 @@
                 </div>
                 <div class="flex items-center space-x-2">
                     <button onclick="exportCSV()" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2 rounded-lg text-xs font-medium flex items-center space-x-2 shadow-sm transition">
-                        <i class="fa-solid fa-file-excel text-emerald-600"></i>
-                        <span>Export CSV</span>
+                        <i class="fa-solid fa-file-excel text-emerald-600"></i><span>Export CSV</span>
                     </button>
                     <button onclick="openModalInputAlat()" class="bg-brand-primary hover:bg-brand-hover text-white px-4 py-2 rounded-lg text-xs font-medium flex items-center space-x-2 shadow-sm transition">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Tambah Alat Baru</span>
+                        <i class="fa-solid fa-plus"></i><span>Tambah Alat Baru</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Master Data Table -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
@@ -251,29 +209,27 @@
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="inventory-table-body" class="divide-y divide-slate-200 text-slate-700">
-                            <!-- Populated dynamically -->
-                        </tbody>
+                        <tbody id="inventory-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 3: PEMINJAMAN -->
+        <!-- TAB 3: PEMINJAMAN & RIWAYAT -->
         <section id="content-peminjaman" class="space-y-6 hidden">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900">Manajemen Peminjaman</h2>
-                    <p class="text-sm text-slate-500">Catat dan pantau transaksi peminjaman alat lapangan.</p>
+                    <h2 class="text-xl font-bold text-slate-900">Manajemen Peminjaman & Pengembalian</h2>
+                    <p class="text-sm text-slate-500">Catat transaksi peminjaman lapangan dan pantau riwayat pengembalian.</p>
                 </div>
                 <button onclick="openModalPeminjaman()" class="bg-brand-primary hover:bg-brand-hover text-white px-4 py-2 rounded-lg text-xs font-medium flex items-center space-x-2 shadow-sm transition">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Buat Peminjaman</span>
+                    <i class="fa-solid fa-plus"></i><span>Buat Peminjaman</span>
                 </button>
             </div>
 
-            <!-- Loan Transactions Table -->
+            <!-- Tabel Manajemen Peminjaman -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-200 bg-slate-50 font-semibold text-xs text-slate-700 uppercase">Daftar Peminjaman Aktif</div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
@@ -285,13 +241,32 @@
                                 <th class="py-3 px-4">Nama Alat</th>
                                 <th class="py-3 px-4">Serial No / Inv</th>
                                 <th class="py-3 px-4">Vol Pinjam</th>
-                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4">Kondisi / Status</th>
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="loan-table-body" class="divide-y divide-slate-200 text-slate-700">
-                            <!-- Populated dynamically -->
-                        </tbody>
+                        <tbody id="loan-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tabel Riwayat Pengembalian -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mt-8">
+                <div class="p-4 border-b border-slate-200 bg-slate-50 font-semibold text-xs text-slate-700 uppercase">Riwayat Pengembalian Alat</div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                                <th class="py-3 px-4">No</th>
+                                <th class="py-3 px-4">Nama Peminjam</th>
+                                <th class="py-3 px-4">Nama Alat</th>
+                                <th class="py-3 px-4">Brand / Type</th>
+                                <th class="py-3 px-4">Tgl Kembali</th>
+                                <th class="py-3 px-4">Kondisi</th>
+                                <th class="py-3 px-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -307,9 +282,7 @@
                     <h3 id="rincian-title" class="font-bold text-base text-slate-900">Rincian Inventaris</h3>
                     <p id="rincian-subtitle" class="text-xs text-slate-500">Total Quantity: 0 Unit</p>
                 </div>
-                <button onclick="closeModalRincian()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+                <button onclick="closeModalRincian()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto flex-grow">
                 <div class="overflow-x-auto">
@@ -324,9 +297,7 @@
                                 <th class="py-2.5 px-3">Volume</th>
                             </tr>
                         </thead>
-                        <tbody id="rincian-table-body" class="divide-y divide-slate-200 text-slate-700">
-                            <!-- Populated dynamically -->
-                        </tbody>
+                        <tbody id="rincian-table-body" class="divide-y divide-slate-200 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -336,17 +307,16 @@
         </div>
     </div>
 
-    <!-- MODAL: FORM INPUT ALAT BARU (MULTI-ITEM DENGAN 1 TANGGAL & 1 NO INVENTARIS DASAR) -->
+    <!-- MODAL: FORM INPUT / EDIT ALAT BARU (MULTI-ITEM) -->
     <div id="modal-input-alat" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
             <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-                <h3 class="font-bold text-base text-slate-900">Form Input Inventaris Alat Baru</h3>
-                <button onclick="closeModalInputAlat()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+                <h3 id="modal-alat-title" class="font-bold text-base text-slate-900">Form Input Inventaris Alat Baru</h3>
+                <button onclick="closeModalInputAlat()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto flex-grow space-y-4">
                 <form id="form-alat" onsubmit="saveInventarisAlat(event)" class="space-y-4">
+                    <input type="hidden" id="edit-index-alat" value="">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pembelian</label>
@@ -360,10 +330,9 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-semibold text-slate-600">Daftar Item Barang dalam 1 Tgl</label>
+                            <label class="text-xs font-semibold text-slate-600">Daftar Item Barang</label>
                             <button type="button" onclick="addAlatRow()" class="text-xs font-medium text-brand-primary hover:underline flex items-center space-x-1">
-                                <i class="fa-solid fa-plus"></i>
-                                <span>Tambah Baris Item</span>
+                                <i class="fa-solid fa-plus"></i><span>Tambah Baris Item</span>
                             </button>
                         </div>
                         <div class="border border-slate-200 rounded-xl overflow-x-auto">
@@ -373,16 +342,14 @@
                                         <th class="py-2 px-2.5">Kategori</th>
                                         <th class="py-2 px-2.5">Nama Alat</th>
                                         <th class="py-2 px-2.5">Brand / Type</th>
-                                        <th class="py-2 px-2.5">Vol</th>
-                                        <th class="py-2 px-2.5">Satuan</th>
+                                        <th class="py-2 px-2.5">Qty</th>
+                                        <th class="py-2 px-2.5">Sat</th>
                                         <th class="py-2 px-2.5">Lokasi</th>
                                         <th class="py-2 px-2.5">Kondisi</th>
                                         <th class="py-2 px-2.5 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="multi-alat-rows" class="divide-y divide-slate-200">
-                                    <!-- Dynamic rows -->
-                                </tbody>
+                                <tbody id="multi-alat-rows" class="divide-y divide-slate-200"></tbody>
                             </table>
                         </div>
                     </div>
@@ -396,17 +363,16 @@
         </div>
     </div>
 
-    <!-- MODAL: FORM PEMINJAMAN ALAT (MULTI-ITEM DENGAN 1 TGL & 1 NAMA PEMINJAM) -->
+    <!-- MODAL: FORM PEMINJAMAN ALAT (MULTI-ITEM) -->
     <div id="modal-peminjaman" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
             <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-                <h3 class="font-bold text-base text-slate-900">Form Peminjaman Alat Proyek</h3>
-                <button onclick="closeModalPeminjaman()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+                <h3 id="modal-loan-title" class="font-bold text-base text-slate-900">Form Peminjaman Alat Proyek</h3>
+                <button onclick="closeModalPeminjaman()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto flex-grow space-y-4">
                 <form id="form-peminjaman" onsubmit="savePeminjaman(event)" class="space-y-4">
+                    <input type="hidden" id="edit-index-loan" value="">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Pinjam</label>
@@ -424,31 +390,59 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <label class="text-xs font-semibold text-slate-600">Pilih Beberapa Item Alat untuk Dipinjam</label>
+                            <label class="text-xs font-semibold text-slate-600">Pilih Beberapa Item Alat & Keterangan</label>
                             <button type="button" onclick="addLoanItemRow()" class="text-xs font-medium text-brand-primary hover:underline flex items-center space-x-1">
-                                <i class="fa-solid fa-plus"></i>
-                                <span>Tambah Item Alat</span>
+                                <i class="fa-solid fa-plus"></i><span>Tambah Item Alat</span>
                             </button>
                         </div>
                         <div class="border border-slate-200 rounded-xl overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs min-w-[500px]">
+                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
                                 <thead>
                                     <tr class="bg-slate-50 text-slate-500 uppercase border-b border-slate-200">
                                         <th class="py-2 px-3">Pilih Alat dari Inventaris</th>
-                                        <th class="py-2 px-3 w-32">Volume Pinjam</th>
+                                        <th class="py-2 px-3 w-28">Vol Pinjam</th>
+                                        <th class="py-2 px-3">Kondisi Saat Ini</th>
                                         <th class="py-2 px-3 w-16 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="loan-item-rows" class="divide-y divide-slate-200">
-                                    <!-- Dynamic rows -->
-                                </tbody>
+                                <tbody id="loan-item-rows" class="divide-y divide-slate-200"></tbody>
                             </table>
                         </div>
                     </div>
 
                     <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200">
                         <button type="button" onclick="closeModalPeminjaman()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-xs font-medium transition">Batal</button>
-                        <button type="submit" class="bg-brand-primary hover:bg-brand-hover text-white px-5 py-2 rounded-lg text-xs font-medium transition">Catat Peminjaman</button>
+                        <button type="submit" class="bg-brand-primary hover:bg-brand-hover text-white px-5 py-2 rounded-lg text-xs font-medium transition">Simpan Peminjaman</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: FORM PERBAIKAN -->
+    <div id="modal-perbaikan" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl max-w-md w-full flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <h3 class="font-bold text-base text-slate-900">Form Perbaikan Alat</h3>
+                <button onclick="closeModalPerbaikan()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-200 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <form id="form-perbaikan" onsubmit="savePerbaikan(event)" class="space-y-4">
+                    <input type="hidden" id="perbaikan-history-index" value="">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Perbaikan</label>
+                        <input type="date" id="repair-tgl" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Status / Kondisi Perbaikan</label>
+                        <select id="repair-status" required class="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-primary outline-none">
+                            <option value="Bisa Diperbaiki">Bisa Diperbaiki</option>
+                            <option value="Rusak Total">Rusak Total</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200">
+                        <button type="button" onclick="closeModalPerbaikan()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-xs font-medium transition">Batal</button>
+                        <button type="submit" class="bg-brand-primary hover:bg-brand-hover text-white px-5 py-2 rounded-lg text-xs font-medium transition">Submit Perbaikan</button>
                     </div>
                 </form>
             </div>
@@ -457,7 +451,7 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // State Data Mock / LocalStorage
+        // State Data
         let inventoryData = JSON.parse(localStorage.getItem('app_inventory')) || [
             { id: 'INV-001', kategori: 'Tool', nama: 'Gerinda Tangan', brand: 'Makita 4"', tglBeli: '2026-09-01', lokasi: 'Gudang ARK', kondisi: 'Baik', vol: 5, satuan: 'Unit' },
             { id: 'INV-002', kategori: 'Tool', nama: 'Bor Tangan', brand: 'Bosch', tglBeli: '2026-09-03', lokasi: 'Gudang ARK', kondisi: 'Baik', vol: 3, satuan: 'Unit' },
@@ -465,30 +459,35 @@
         ];
 
         let loanData = JSON.parse(localStorage.getItem('app_loans')) || [];
+        let historyData = JSON.parse(localStorage.getItem('app_history')) || [];
 
         let volumeChartInstance = null;
         let conditionChartInstance = null;
 
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
         // Tab Navigation
         function switchTab(tabId) {
             document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('border-brand-primary', 'text-white');
-                btn.classList.add('border-transparent', 'text-slate-400');
+            document.querySelectorAll('.sidebar-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-primary', 'text-white');
+                btn.classList.add('text-slate-300', 'hover:bg-slate-800', 'hover:text-white');
             });
 
             document.getElementById(`content-${tabId}`).classList.remove('hidden');
             const activeBtn = document.getElementById(`tab-${tabId}`);
-            activeBtn.classList.add('border-brand-primary', 'text-white');
-            activeBtn.classList.remove('border-transparent', 'text-slate-400');
+            activeBtn.classList.add('bg-brand-primary', 'text-white');
+            activeBtn.classList.remove('text-slate-300', 'hover:bg-slate-800', 'hover:text-white');
 
-            if (tabId === 'dashboard') {
-                renderDashboard();
-            } else if (tabId === 'data-alat') {
-                renderInventoryTable();
-            } else if (tabId === 'peminjaman') {
-                renderLoanTable();
-            }
+            if (tabId === 'dashboard') renderDashboard();
+            else if (tabId === 'data-alat') renderInventoryTable();
+            else if (tabId === 'peminjaman') { renderLoanTable(); renderHistoryTable(); }
         }
 
         function syncData() {
@@ -496,9 +495,10 @@
             renderDashboard();
             renderInventoryTable();
             renderLoanTable();
+            renderHistoryTable();
         }
 
-        // Render Dashboard & Charts
+        // Render Dashboard
         function renderDashboard() {
             let totalUnit = inventoryData.reduce((sum, item) => sum + Number(item.vol), 0);
             let rusakUnit = inventoryData.filter(i => i.kondisi.toLowerCase().includes('rusak') || i.kondisi.toLowerCase().includes('perbaikan')).reduce((sum, item) => sum + Number(item.vol), 0);
@@ -510,16 +510,12 @@
             document.getElementById('card-baik').innerText = `${baikUnit} Unit`;
             document.getElementById('card-gudang').innerText = `${gudangUnit} Unit`;
 
-            renderCharts(baikUnit, rusakUnit, totalUnit);
-            renderDashboardActiveLoans();
+            renderCharts(baikUnit, rusakUnit);
         }
 
-        function renderCharts(baik, rusak, total) {
-            // Volume Chart
+        function renderCharts(baik, rusak) {
             const ctxVol = document.getElementById('volumeChart').getContext('2d');
             if (volumeChartInstance) volumeChartInstance.destroy();
-            
-            // Group by category/name for chart
             let labels = inventoryData.map(i => i.nama);
             let dataVals = inventoryData.map(i => i.vol);
 
@@ -527,70 +523,24 @@
                 type: 'bar',
                 data: {
                     labels: labels.length ? labels : ['Belum ada data'],
-                    datasets: [{
-                        label: 'Volume Unit',
-                        data: dataVals.length ? dataVals : [0],
-                        backgroundColor: '#2563eb',
-                        borderRadius: 6
-                    }]
+                    datasets: [{ label: 'Volume Unit', data: dataVals.length ? dataVals : [0], backgroundColor: '#2563eb', borderRadius: 6 }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, grid: { borderDash: [4, 4] } }, x: { grid: { display: false } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { borderDash: [4, 4] } }, x: { grid: { display: false } } } }
             });
 
-            // Condition Chart
             const ctxCond = document.getElementById('conditionChart').getContext('2d');
             if (conditionChartInstance) conditionChartInstance.destroy();
-
             conditionChartInstance = new Chart(ctxCond, {
                 type: 'doughnut',
                 data: {
                     labels: ['Kondisi Baik', 'Rusak / Perbaikan'],
-                    datasets: [{
-                        data: [baik, rusak],
-                        backgroundColor: ['#10b981', '#f59e0b'],
-                        borderWidth: 0
-                    }]
+                    datasets: [{ data: [baik, rusak], backgroundColor: ['#10b981', '#f59e0b'], borderWidth: 0 }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } } }
             });
         }
 
-        function renderDashboardActiveLoans() {
-            const tbody = document.getElementById('dashboard-active-loans');
-            tbody.innerHTML = '';
-            let activeLoans = loanData.filter(l => l.status === 'Dipinjam');
-
-            if (activeLoans.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400 italic">Belum ada data peminjaman aktif.</td></tr>`;
-                return;
-            }
-
-            activeLoans.forEach((loan, idx) => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="py-3 px-4 font-medium">${idx + 1}</td>
-                        <td class="py-3 px-4">${loan.tgl}</td>
-                        <td class="py-3 px-4">${loan.peminjam}</td>
-                        <td class="py-3 px-4">${loan.namaAlat}</td>
-                        <td class="py-3 px-4 font-mono text-xs">${loan.noInv}</td>
-                        <td class="py-3 px-4">${loan.lokasi}</td>
-                        <td class="py-3 px-4">${loan.vol} Unit</td>
-                        <td class="py-3 px-4"><span class="bg-amber-50 text-amber-600 px-2 py-0.5 rounded-full font-medium">${loan.status}</span></td>
-                    </tr>
-                `;
-            });
-        }
-
-        // Modal Rincian Dashboard (Sesuai Logika Filter Kartu)
+        // Modal Rincian Dashboard
         function openRincian(type) {
             const modal = document.getElementById('modal-rincian');
             const titleElem = document.getElementById('rincian-title');
@@ -600,20 +550,10 @@
 
             let filtered = [];
             let titleText = '';
-
-            if (type === 'total') {
-                filtered = inventoryData;
-                titleText = 'Rincian Semua Item Inventaris';
-            } else if (type === 'rusak') {
-                filtered = inventoryData.filter(i => i.kondisi.toLowerCase().includes('rusak') || i.kondisi.toLowerCase().includes('perbaikan'));
-                titleText = 'Rincian Alat Rusak / Perbaikan';
-            } else if (type === 'baik') {
-                filtered = inventoryData.filter(i => i.kondisi.toLowerCase().includes('baik'));
-                titleText = 'Rincian Alat Kondisi Baik';
-            } else if (type === 'gudang') {
-                filtered = inventoryData.filter(i => i.lokasi.toLowerCase().includes('gudang'));
-                titleText = 'Rincian Alat Tersedia di Gudang';
-            }
+            if (type === 'total') { filtered = inventoryData; titleText = 'Rincian Semua Item Inventaris'; }
+            else if (type === 'rusak') { filtered = inventoryData.filter(i => i.kondisi.toLowerCase().includes('rusak') || i.kondisi.toLowerCase().includes('perbaikan')); titleText = 'Rincian Alat Rusak / Perbaikan'; }
+            else if (type === 'baik') { filtered = inventoryData.filter(i => i.kondisi.toLowerCase().includes('baik')); titleText = 'Rincian Alat Kondisi Baik'; }
+            else if (type === 'gudang') { filtered = inventoryData.filter(i => i.lokasi.toLowerCase().includes('gudang')); titleText = 'Rincian Alat Tersedia di Gudang'; }
 
             titleElem.innerText = titleText;
             let totalQty = filtered.reduce((sum, item) => sum + Number(item.vol), 0);
@@ -636,24 +576,18 @@
                     `;
                 });
             }
-
             modal.classList.remove('hidden');
         }
+        function closeModalRincian() { document.getElementById('modal-rincian').classList.add('hidden'); }
 
-        function closeModalRincian() {
-            document.getElementById('modal-rincian').classList.add('hidden');
-        }
-
-        // Render Inventory Table
+        // Data Alat Table & Edit/Add
         function renderInventoryTable() {
             const tbody = document.getElementById('inventory-table-body');
             tbody.innerHTML = '';
-
             if (inventoryData.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="10" class="text-center py-6 text-slate-400 italic">Belum ada data inventaris alat.</td></tr>`;
                 return;
             }
-
             inventoryData.forEach((item, index) => {
                 let badgeColor = item.kondisi.toLowerCase().includes('baik') ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600';
                 tbody.innerHTML += `
@@ -667,18 +601,18 @@
                         <td class="py-3 px-4"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${item.kondisi}</span></td>
                         <td class="py-3 px-4 font-semibold">${item.vol}</td>
                         <td class="py-3 px-4">${item.satuan}</td>
-                        <td class="py-3 px-4 text-center">
-                            <button onclick="deleteInventoryItem(${index})" class="text-rose-500 hover:text-rose-700 p-1 rounded transition" title="Hapus Item">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                        <td class="py-3 px-4 text-center space-x-2">
+                            <button onclick="editInventoryItem(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Edit Item"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteInventoryItem(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus Item"><i class="fa-solid fa-trash-can"></i></button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        // Modal Input Alat Baru (Multi-Item)
         function openModalInputAlat() {
+            document.getElementById('edit-index-alat').value = '';
+            document.getElementById('modal-alat-title').innerText = 'Form Input Inventaris Alat Baru';
             document.getElementById('input-tgl-beli').value = new Date().toISOString().split('T')[0];
             document.getElementById('input-no-inv-base').value = `INV-${Math.floor(100 + Math.random() * 900)}`;
             document.getElementById('multi-alat-rows').innerHTML = '';
@@ -686,13 +620,38 @@
             document.getElementById('modal-input-alat').classList.remove('hidden');
         }
 
-        function closeModalInputAlat() {
-            document.getElementById('modal-input-alat').classList.add('hidden');
+        function editInventoryItem(index) {
+            let item = inventoryData[index];
+            document.getElementById('edit-index-alat').value = index;
+            document.getElementById('modal-alat-title').innerText = 'Form Edit Inventaris Alat';
+            document.getElementById('input-tgl-beli').value = item.tglBeli;
+            document.getElementById('input-no-inv-base').value = item.id.split('-')[0] + '-' + item.id.split('-')[1];
+            
+            const tbody = document.getElementById('multi-alat-rows');
+            tbody.innerHTML = `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="p-2"><input type="text" value="${item.kategori}" class="row-kategori w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2"><input type="text" value="${item.nama}" class="row-nama w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2"><input type="text" value="${item.brand}" class="row-brand w-full text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
+                    <td class="p-2"><input type="number" value="${item.vol}" min="1" class="row-vol w-16 text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2"><input type="text" value="${item.satuan}" class="row-satuan w-20 text-xs border border-slate-300 rounded p-1.5 outline-none"></td>
+                    <td class="p-2"><input type="text" value="${item.lokasi}" class="row-lokasi w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
+                    <td class="p-2">
+                        <select class="row-kondisi text-xs border border-slate-300 rounded p-1.5 outline-none">
+                            <option value="Baik" ${item.kondisi === 'Baik' ? 'selected' : ''}>Baik</option>
+                            <option value="Rusak / Perbaikan" ${item.kondisi.includes('Rusak') ? 'selected' : ''}>Rusak / Perbaikan</option>
+                        </select>
+                    </td>
+                    <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
+                </tr>
+            `;
+            document.getElementById('modal-input-alat').classList.remove('hidden');
         }
+
+        function closeModalInputAlat() { document.getElementById('modal-input-alat').classList.add('hidden'); }
 
         function addAlatRow() {
             const tbody = document.getElementById('multi-alat-rows');
-            const rowId = Date.now() + Math.random();
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-slate-50 transition';
             tr.innerHTML = `
@@ -708,54 +667,54 @@
                         <option value="Rusak / Perbaikan">Rusak / Perbaikan</option>
                     </select>
                 </td>
-                <td class="p-2 text-center">
-                    <button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700 p-1">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </td>
+                <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
             `;
             tbody.appendChild(tr);
         }
 
         function saveInventarisAlat(e) {
             e.preventDefault();
+            const editIdx = document.getElementById('edit-index-alat').value;
             const tglBeli = document.getElementById('input-tgl-beli').value;
             const noBase = document.getElementById('input-no-inv-base').value;
             const rows = document.querySelectorAll('#multi-alat-rows tr');
 
-            if (rows.length === 0) {
-                alert('Tambahkan minimal 1 item barang.');
-                return;
-            }
+            if (rows.length === 0) { alert('Tambahkan minimal 1 item barang.'); return; }
 
-            rows.forEach((row, idx) => {
-                let kategori = row.querySelector('.row-kategori').value;
-                let nama = row.querySelector('.row-nama').value;
-                let brand = row.querySelector('.row-brand').value;
-                let vol = row.querySelector('.row-vol').value;
-                let satuan = row.querySelector('.row-satuan').value;
-                let lokasi = row.querySelector('.row-lokasi').value;
-                let kondisi = row.querySelector('.row-kondisi').value;
-
-                let uniqueId = `${noBase}-${idx + 1}`;
-                inventoryData.push({
-                    id: uniqueId,
-                    kategori,
-                    nama,
-                    brand,
+            if (editIdx !== '') {
+                let row = rows[0];
+                inventoryData[editIdx] = {
+                    id: inventoryData[editIdx].id,
+                    kategori: row.querySelector('.row-kategori').value,
+                    nama: row.querySelector('.row-nama').value,
+                    brand: row.querySelector('.row-brand').value,
                     tglBeli,
-                    lokasi,
-                    kondisi,
-                    vol: Number(vol),
-                    satuan
+                    lokasi: row.querySelector('.row-lokasi').value,
+                    kondisi: row.querySelector('.row-kondisi').value,
+                    vol: Number(row.querySelector('.row-vol').value),
+                    satuan: row.querySelector('.row-satuan').value
+                };
+            } else {
+                rows.forEach((row, idx) => {
+                    inventoryData.push({
+                        id: `${noBase}-${inventoryData.length + idx + 1}`,
+                        kategori: row.querySelector('.row-kategori').value,
+                        nama: row.querySelector('.row-nama').value,
+                        brand: row.querySelector('.row-brand').value,
+                        tglBeli,
+                        lokasi: row.querySelector('.row-lokasi').value,
+                        kondisi: row.querySelector('.row-kondisi').value,
+                        vol: Number(row.querySelector('.row-vol').value),
+                        satuan: row.querySelector('.row-satuan').value
+                    });
                 });
-            });
+            }
 
             localStorage.setItem('app_inventory', JSON.stringify(inventoryData));
             closeModalInputAlat();
             renderInventoryTable();
             renderDashboard();
-            alert('Data inventaris berhasil ditambahkan.');
+            alert('Data inventaris berhasil disimpan.');
         }
 
         function deleteInventoryItem(index) {
@@ -767,18 +726,20 @@
             }
         }
 
-        // Render Loan Table
+        // Peminjaman & Riwayat
         function renderLoanTable() {
             const tbody = document.getElementById('loan-table-body');
             tbody.innerHTML = '';
-
             if (loanData.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-400 italic">Belum ada data peminjaman.</td></tr>`;
                 return;
             }
-
             loanData.forEach((loan, index) => {
-                let badgeColor = loan.status === 'Dipinjam' ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600';
+                let conditionBadge = '';
+                if (loan.kondisiStatus === 'Baik') conditionBadge = 'bg-emerald-50 text-emerald-600';
+                else if (loan.kondisiStatus === 'Perbaikan') conditionBadge = 'bg-amber-50 text-amber-600';
+                else conditionBadge = 'bg-rose-50 text-rose-600';
+
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 transition">
                         <td class="py-3 px-4 font-medium">${index + 1}</td>
@@ -788,17 +749,31 @@
                         <td class="py-3 px-4">${loan.namaAlat}</td>
                         <td class="py-3 px-4 font-mono text-xs">${loan.noInv}</td>
                         <td class="py-3 px-4">${loan.vol} Unit</td>
-                        <td class="py-3 px-4"><span class="${badgeColor} px-2 py-0.5 rounded-full font-medium">${loan.status}</span></td>
-                        <td class="py-3 px-4 text-center">
-                            ${loan.status === 'Dipinjam' ? `<button onclick="returnLoan(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-medium transition">Kembalikan</button>` : `<span class="text-slate-400 text-xs">Selesai</span>`}
+                        <td class="py-3 px-4">
+                            <select onchange="updateLoanCondition(${index}, this.value)" class="text-xs border border-slate-300 rounded p-1 outline-none ${conditionBadge} font-semibold">
+                                <option value="Baik" ${loan.kondisiStatus === 'Baik' ? 'selected' : ''}>Baik</option>
+                                <option value="Perbaikan" ${loan.kondisiStatus === 'Perbaikan' ? 'selected' : ''}>Perbaikan</option>
+                                <option value="Rusak" ${loan.kondisiStatus === 'Rusak' ? 'selected' : ''}>Rusak</option>
+                            </select>
+                        </td>
+                        <td class="py-3 px-4 text-center space-x-2">
+                            <button onclick="editLoan(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Edit Peminjaman"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteLoan(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus Peminjaman"><i class="fa-solid fa-trash-can"></i></button>
+                            <button onclick="moveToHistory(${index})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[10px] font-medium" title="Selesaikan / Kembalikan">Kembalikan</button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        // Modal Peminjaman Alat (Multi-Item dengan 1 Tgl & 1 Peminjam)
+        function updateLoanCondition(index, val) {
+            loanData[index].kondisiStatus = val;
+            localStorage.setItem('app_loans', JSON.stringify(loanData));
+        }
+
         function openModalPeminjaman() {
+            document.getElementById('edit-index-loan').value = '';
+            document.getElementById('modal-loan-title').innerText = 'Form Peminjaman Alat Proyek';
             document.getElementById('loan-tgl').value = new Date().toISOString().split('T')[0];
             document.getElementById('loan-peminjam').value = '';
             document.getElementById('loan-lokasi').value = '';
@@ -807,85 +782,196 @@
             document.getElementById('modal-peminjaman').classList.remove('hidden');
         }
 
-        function closeModalPeminjaman() {
-            document.getElementById('modal-peminjaman').classList.add('hidden');
-        }
+        function closeModalPeminjaman() { document.getElementById('modal-peminjaman').classList.add('hidden'); }
 
-        function addLoanItemRow() {
+        function addLoanItemRow(selectedInv = '', selectedVol = 1, selectedCond = 'Baik') {
             const tbody = document.getElementById('loan-item-rows');
             const tr = document.createElement('tr');
             tr.className = 'hover:bg-slate-50 transition';
 
             let optionsHtml = '<option value="">-- Pilih Alat dari Inventaris --</option>';
             inventoryData.forEach(item => {
-                optionsHtml += `<option value="${item.id}">${item.nama} (${item.id}) - Stok: ${item.vol}</option>`;
+                optionsHtml += `<option value="${item.id}" ${item.id === selectedInv ? 'selected' : ''}>${item.nama} (${item.id}) - Stok: ${item.vol}</option>`;
             });
 
             tr.innerHTML = `
+                <td class="p-2"><select class="loan-item-select w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required>${optionsHtml}</select></td>
+                <td class="p-2"><input type="number" value="${selectedVol}" min="1" class="loan-item-vol w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required></td>
                 <td class="p-2">
-                    <select class="loan-item-select w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required>
-                        ${optionsHtml}
+                    <select class="loan-item-kondisi w-full text-xs border border-slate-300 rounded p-1.5 outline-none font-semibold">
+                        <option value="Baik" ${selectedCond === 'Baik' ? 'selected' : ''}>Baik</option>
+                        <option value="Perbaikan" ${selectedCond === 'Perbaikan' ? 'selected' : ''}>Perbaikan</option>
+                        <option value="Rusak" ${selectedCond === 'Rusak' ? 'selected' : ''}>Rusak</option>
                     </select>
                 </td>
-                <td class="p-2">
-                    <input type="number" value="1" min="1" class="loan-item-vol w-full text-xs border border-slate-300 rounded p-1.5 outline-none" required>
-                </td>
-                <td class="p-2 text-center">
-                    <button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700 p-1">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </td>
+                <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 p-1"><i class="fa-solid fa-trash-can"></i></button></td>
             `;
             tbody.appendChild(tr);
         }
 
         function savePeminjaman(e) {
             e.preventDefault();
+            const editIdx = document.getElementById('edit-index-loan').value;
             const tgl = document.getElementById('loan-tgl').value;
             const peminjam = document.getElementById('loan-peminjam').value;
             const lokasi = document.getElementById('loan-lokasi').value;
             const rows = document.querySelectorAll('#loan-item-rows tr');
 
-            if (rows.length === 0) {
-                alert('Pilih minimal 1 item alat.');
-                return;
-            }
+            if (rows.length === 0) { alert('Pilih minimal 1 item alat.'); return; }
 
-            rows.forEach(row => {
-                let select = row.querySelector('.loan-item-select');
-                let volInput = row.querySelector('.loan-item-vol');
-                let invId = select.value;
-                let volPinjam = Number(volInput.value);
-
-                if (invId) {
+            if (editIdx !== '') {
+                let row = rows[0];
+                let invId = row.querySelector('.loan-item-select').value;
+                let foundItem = inventoryData.find(i => i.id === invId);
+                loanData[editIdx] = {
+                    tgl, peminjam, lokasi,
+                    namaAlat: foundItem ? foundItem.nama : 'Alat Proyek',
+                    noInv: invId,
+                    vol: Number(row.querySelector('.loan-item-vol').value),
+                    kondisiStatus: row.querySelector('.loan-item-kondisi').value
+                };
+            } else {
+                rows.forEach(row => {
+                    let invId = row.querySelector('.loan-item-select').value;
                     let foundItem = inventoryData.find(i => i.id === invId);
-                    if (foundItem) {
+                    if (invId) {
                         loanData.push({
-                            tgl,
-                            peminjam,
-                            lokasi,
-                            namaAlat: foundItem.nama,
-                            noInv: foundItem.id,
-                            vol: volPinjam,
-                            status: 'Dipinjam'
+                            tgl, peminjam, lokasi,
+                            namaAlat: foundItem ? foundItem.nama : 'Alat Proyek',
+                            noInv: invId,
+                            vol: Number(row.querySelector('.loan-item-vol').value),
+                            kondisiStatus: row.querySelector('.loan-item-kondisi').value
                         });
                     }
-                }
-            });
+                });
+            }
 
             localStorage.setItem('app_loans', JSON.stringify(loanData));
             closeModalPeminjaman();
             renderLoanTable();
-            renderDashboard();
-            alert('Peminjaman alat berhasil dicatat.');
         }
 
-        function returnLoan(index) {
-            loanData[index].status = 'Dikembalikan';
+        function editLoan(index) {
+            let loan = loanData[index];
+            document.getElementById('edit-index-loan').value = index;
+            document.getElementById('modal-loan-title').innerText = 'Form Edit Peminjaman';
+            document.getElementById('loan-tgl').value = loan.tgl;
+            document.getElementById('loan-peminjam').value = loan.peminjam;
+            document.getElementById('loan-lokasi').value = loan.lokasi;
+            document.getElementById('loan-item-rows').innerHTML = '';
+            addLoanItemRow(loan.noInv, loan.vol, loan.kondisiStatus);
+            document.getElementById('modal-peminjaman').classList.remove('hidden');
+        }
+
+        function deleteLoan(index) {
+            if (confirm('Yakin ingin menghapus data peminjaman ini?')) {
+                loanData.splice(index, 1);
+                localStorage.setItem('app_loans', JSON.stringify(loanData));
+                renderLoanTable();
+            }
+        }
+
+        // Pindah ke Riwayat Pengembalian
+        function moveToHistory(index) {
+            let loan = loanData[index];
+            let foundInv = inventoryData.find(i => i.id === loan.noInv);
+            historyData.push({
+                peminjam: loan.peminjam,
+                namaAlat: loan.namaAlat,
+                brand: foundInv ? foundInv.brand : '-',
+                tglKembali: new Date().toISOString().split('T')[0],
+                kondisi: loan.kondisiStatus
+            });
+            loanData.splice(index, 1);
             localStorage.setItem('app_loans', JSON.stringify(loanData));
+            localStorage.setItem('app_history', JSON.stringify(historyData));
             renderLoanTable();
-            renderDashboard();
-            alert('Alat berhasil dikembalikan.');
+            renderHistoryTable();
+            alert('Alat berhasil dikembalikan dan tercatat di riwayat.');
+        }
+
+        // Render Riwayat Pengembalian Table
+        function renderHistoryTable() {
+            const tbody = document.getElementById('history-table-body');
+            tbody.innerHTML = '';
+            if (historyData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-400 italic">Belum ada riwayat pengembalian.</td></tr>`;
+                return;
+            }
+            historyData.forEach((hist, index) => {
+                let badgeColor = hist.kondisi === 'Baik' ? 'bg-emerald-50 text-emerald-600' : (hist.kondisi === 'Perbaikan' ? 'bg-amber-50 text-amber-600' : 'bg-rose-50 text-rose-600');
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="py-3 px-4 font-medium">${index + 1}</td>
+                        <td class="py-3 px-4 font-medium text-slate-900">${hist.peminjam}</td>
+                        <td class="py-3 px-4">${hist.namaAlat}</td>
+                        <td class="py-3 px-4 text-slate-500">${hist.brand}</td>
+                        <td class="py-3 px-4">${hist.tglKembali}</td>
+                        <td class="py-3 px-4"><span class="${badgeColor} px-2 py-0.5 rounded-full text-[10px] font-semibold">${hist.kondisi}</span></td>
+                        <td class="py-3 px-4 text-center space-x-2">
+                            <button onclick="openModalPerbaikan(${index})" class="text-amber-500 hover:text-amber-700 p-1" title="Form Perbaikan"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+                            <button onclick="editHistory(${index})" class="text-blue-500 hover:text-blue-700 p-1" title="Edit Riwayat"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteHistory(${index})" class="text-rose-500 hover:text-rose-700 p-1" title="Hapus Riwayat"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Form Perbaikan Modal & Logic
+        function openModalPerbaikan(historyIndex) {
+            document.getElementById('perbaikan-history-index').value = historyIndex;
+            document.getElementById('repair-tgl').value = new Date().toISOString().split('T')[0];
+            document.getElementById('modal-perbaikan').classList.remove('hidden');
+        }
+        function closeModalPerbaikan() { document.getElementById('modal-perbaikan').classList.add('hidden'); }
+
+        function savePerbaikan(e) {
+            e.preventDefault();
+            let histIdx = document.getElementById('perbaikan-history-index').value;
+            let repairTgl = document.getElementById('repair-tgl').value;
+            let repairStatus = document.getElementById('repair-status').value;
+
+            if (histIdx !== '') {
+                historyData[histIdx].kondisi = repairStatus;
+                localStorage.setItem('app_history', JSON.stringify(historyData));
+                renderHistoryTable();
+                closeModalPerbaikan();
+                alert(`Perbaikan alat tercatat pada ${repairTgl} dengan status: ${repairStatus}`);
+            }
+        }
+
+        function editHistory(index) {
+            let hist = historyData[index];
+            let newPeminjam = prompt("Edit Nama Peminjam:", hist.peminjam);
+            if (newPeminjam !== null) {
+                historyData[index].peminjam = newPeminjam;
+                localStorage.setItem('app_history', JSON.stringify(historyData));
+                renderHistoryTable();
+            }
+        }
+
+        function deleteHistory(index) {
+            if (confirm('Yakin ingin menghapus riwayat pengembalian ini?')) {
+                historyData.splice(index, 1);
+                localStorage.setItem('app_history', JSON.stringify(historyData));
+                renderHistoryTable();
+            }
+        }
+
+        // Export CSV Helper
+        function exportCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,No Inv,Kategori,Nama Alat,Brand,Tgl Beli,Lokasi,Kondisi,Volume,Satuan\n";
+            inventoryData.forEach(row => {
+                csvContent += `"${row.id}","${row.kategori}","${row.nama}","${row.brand}","${row.tglBeli}","${row.lokasi}","${row.kondisi}",${row.vol},"${row.satuan}"\n`;
+            });
+            let encodedUri = encodeURI(csvContent);
+            let link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "inventaris_alat_proyek.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // Initialize on load
